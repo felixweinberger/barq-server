@@ -4,8 +4,8 @@ Each object shows an example of the structure of these data types in the *front 
 Each object implies a "table" or "collection" that is stored in the database of the *front office* server.
 
 ```js
-Counter: {
-  _id: 'a76jg9', // ID needs to be 6 digit base62, generated at creation time, so overwrite mongo default ID!
+Bar: {
+  barId: 'a76jg9', // ID needs to be 6 digit base62, generated at creation time, so overwrite mongo default ID!
   name: 'Penderels Oak',
   address: '283-288 High Holborn, Holborn, London WC1V 7HP, UK',
   URLs: {
@@ -22,7 +22,7 @@ Counter: {
 }
 
 Menu: {
-  _id: '{uuid}',
+  menuId: '{uuid}',
   categories: [Category],
 }
 
@@ -45,7 +45,7 @@ Order: {
 }
 
 Employee: {
-  _id: '{uuid}',
+  staffId: '{uuid}',
   email: 'tom.cheers@gmail.com',
   role: 'admin', // admin or staff
 }

@@ -8,16 +8,18 @@ services:
       - ./:/app
       - /app/node_modules/
     depends_on:
-      - cache
+      - redis
     ports:
       - "3000:${FRONTOFFICE_PORT}"
     environment:
       - ENV=${ENV}
       - FRONTOFFICE_PORT=${FRONTOFFICE_PORT}
+      - REDIS_URL=redis://frontoffice_cache
     restart: always
     command: npm run ${ENV}
      
-  cache:
+  redis:
     image: redis:5
+    container_name: frontoffice_cache
     ports: 
       - "${FRONTOFFICE_CACHE_PORT}:6379"
