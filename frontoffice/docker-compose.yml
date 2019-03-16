@@ -2,10 +2,22 @@ version: '3'
 
 services:
 
-  frontoffice:
+  app:
     build: .
+    volumes:
+      - ./:/app
+      - /app/node_modules/
+    depends_on:
+      - cache
     ports:
-     - "3000:3000"
+      - "3000:${FRONTOFFICE_PORT}"
+    environment:
+      - ENV=${ENV}
+      - FRONTOFFICE_PORT=${FRONTOFFICE_PORT}
+    restart: always
+    command: npm run ${ENV}
      
-  db:
-    # redis DB here tbd
+  cache:
+    image: redis:5
+    ports: 
+      - "${FRONTOFFICE_CACHE_PORT}:6379"
