@@ -1,8 +1,8 @@
 {
   "name": "barq-server",
   "version": "1.0.0",
-  "description": "BarQ back-end",
-  "main": "client/index.js",
+  "description": "BarQ Back Office",
+  "main": "index.js",
   "scripts": {
     "lint": "eslint .",
     "precommit": "npm run lint",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/felixweinberger/barq-client.git"
+    "url": "git+https://github.com/felixweinberger/barq-server.git"
   },
   "author": "Rachel Bonny, Natalia Rizzi, Alan Hu, Egill Hreinsson, Felix Weinberger",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/felixweinberger/barq-client/issues"
+    "url": "https://github.com/felixweinberger/barq-server/issues"
   },
-  "homepage": "https://github.com/felixweinberger/barq-client#readme",
+  "homepage": "https://github.com/felixweinberger/barq-server#readme",
   "dependencies": {},
   "devDependencies": {
     "eslint": "^5.15.2",
