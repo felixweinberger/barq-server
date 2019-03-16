@@ -12,11 +12,12 @@ Counter: {
     Customer: 'https://barq.app/a76jg9',
     Staff: 'https://barq.app/a76jg9/staff',
   },
-  menu: Menu
+  currency: 'GBP',
+  menu: Menu,
   queue: [Order],
   history: [Order],
   staff: [Employee],
-  admin: Employee, // uuid of admin
+  owner: Employee, // uuid of admin
   open: false,
 }
 
@@ -26,23 +27,20 @@ Menu: {
 }
 
 Category: {
-  _id: '{uuid}',
   name: 'Bottled beers',
   items: [Item],
 }
 
 Item: {
-  _id: '{uuid}',
-  Name: 'Corona',
-  Price: 3.60,
-  Currency: 'EUR (€)', // needs to be in the format that stripe accepts!! stripe needs to know the currency
+  name: 'Corona',
+  price: 3.60,
+  currency: 'EUR (€)', // needs to be in the format that stripe accepts!! stripe needs to know the currency
   ...userDefinedFields
 }
 
 Order: {
-  _id: '{uuid}',
-  items: [Item],
   orderId: 359,
+  items: [Item],
   status: '{paid|in preparation|ready for pickup|completed|failed|cancelled}', // only last 3 in history
 }
 
