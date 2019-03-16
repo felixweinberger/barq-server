@@ -26,7 +26,7 @@ Menu: {
 }
 
 Category: {
-  _id: '{uuid},
+  _id: '{uuid}',
   name: 'Bottled beers',
   items: [Item],
 }
