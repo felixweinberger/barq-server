@@ -7,7 +7,7 @@
     "lint": "eslint .",
     "precommit": "npm run lint",
     "test": "test",
-    "dev": "npx nodemon index.js"
+    "dev": "npx nodemon --exec babel-node index.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,13 @@
     "url": "https://github.com/felixweinberger/barq-server/issues"
   },
   "homepage": "https://github.com/felixweinberger/barq-server#readme",
-  "dependencies": {},
+  "dependencies": {
+    "redis": "^2.8.0",
+    "@babel/cli": "^7.0.0-rc.1",
+    "@babel/core": "^7.0.0-rc.1",
+    "@babel/node": "^7.0.0-rc.1",
+    "@babel/preset-env": "^7.0.0-rc.1"
+  },
   "devDependencies": {
     "eslint": "^5.15.2",
     "eslint-config-airbnb": "^17.1.0",
