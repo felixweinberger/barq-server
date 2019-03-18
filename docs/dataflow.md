@@ -23,7 +23,7 @@ Bar: {
 
 Menu: {
   menuId: '{uuid}',
-  categories: [Category],
+  categories: [Category]
 }
 
 Category: {
@@ -34,14 +34,20 @@ Category: {
 Item: {
   name: 'Corona',
   price: 3.60,
-  currency: 'EUR (€)', // needs to be in the format that stripe accepts!! stripe needs to know the currency
-  ...userDefinedFields
+  ...ownerDefinedFields
 }
 
 Order: {
   orderId: 359,
-  items: [Item],
+  items: [OrderItem],
   status: '{paid|in preparation|ready for pickup|completed|failed|cancelled}', // only last 3 in history
+}
+
+OrderItem: {
+  name: 'Corona',
+  price: 3.60,
+  quantity: 2,
+  ...ownerDefinedFields
 }
 
 Employee: {

@@ -3,9 +3,11 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
+import dotenv from 'dotenv';
 
 import routes from './routes';
 
+dotenv.config();
 const app = express();
 const PORT = process.env.SERVER_PORT || 3000;
 const ENV = process.env.ENV || 'dev';
