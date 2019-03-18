@@ -1,14 +1,14 @@
 import express from 'express';
 
-const router = express.Router();
+import ownerRoutes from './ownerRoutes';
+import staffRoutes from './staffRoutes';
+import customerRoutes from './customerRoutes';
 
-const ownerRoutes = require('./ownerRoutes');
-const staffRoutes = require('./staffRoutes');
-const customerRoutes = require('./customerRoutes');
+const router = express.Router();
 
 router
   .use('/owner', ownerRoutes)
   .use('/staff', staffRoutes)
   .use('/customer', customerRoutes);
 
-module.exports = router;
+export default router;
