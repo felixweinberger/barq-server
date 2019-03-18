@@ -1,0 +1,66 @@
+# Use version 3 of docker-compose (latest at time of writing)
+version: '3'
+
+# Define the services
+services:
+
+  # Set up the service for the server
+  app:
+    # Build the current directory
+    build: .
+    # Ensure that node_modules aren't unnecessarily copied
+    volumes:
+      - ./:/app
+      - /app/node_modules/
+    # Set the container name
+    container_name: ${SERVER_NAME}
+    # Let the server know that it depends on redis, so that it can connect
+    depends_on:
+      - mongo
+      - redis
+    # Define the ports on which the local machine will be able to access the server (local:container)
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    # Define the environment variables based on local .env
+    environment:
+      - ENV=${ENV}
+      - SERVER_PORT=${SERVER_PORT}
+      - MONGO_URL=${MONGO_URL}
+      - MONGO_NAME=${MONGO_NAME}
+      - MONGO_PORT=${MONGO_PORT}
+      - REDIS_URL=${REDIS_URL}
+      - REDIS_PORT=${REDIS_PORT}
+    # Make sure to keep restarting the server if it fails
+    restart: always
+    # Run the appropriate command for starting the server when ready
+    command: ./scripts/wait-for.sh db:27017 -- npm run ${ENV}
+     
+  # Set up the mongo db for the backoffice services
+  mongo:
+    # Use the official latest stable mongo image
+    image: mongo:4
+    # Set the container name
+    container_name: ${MONGO_NAME}
+    # Designate a local directory to persist data
+    volumes:
+     - ./data:/data/${MONGO_NAME}
+    # Expose the correct port for connections
+    ports:
+     - "${MONGO_PORT}:27017"
+    # Make sure to keep restarting the server if it fails
+    restart: always
+
+  # Set up the redis cache for the frontoffice services (eventually)
+  redis:
+    # Use the official image of redis 5 (latest version at time of writing)
+    image: redis:5
+    # Set the container_name to have easy access to the cache
+    container_name: ${REDIS_NAME}
+    # Set the volumes for potentially persisting data
+    volumes: 
+      - ./cache:/data
+    # Set the ports
+    ports:
+      - "${REDIS_PORT}:6379"
+    # Make sure to keep restarting the server if it fails
+    restart: always
