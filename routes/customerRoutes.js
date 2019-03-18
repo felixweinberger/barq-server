@@ -3,7 +3,10 @@ import customer from '../controllers/customer';
 
 const router = express.Router();
 
-// Something
-router.get('/', customer.something);
+// get menu for given barId
+router.get('/:barId/menu', customer.getMenu);
+
+// pay
+router.post('/:barId/pay', customer.pay);
 
 export default router;

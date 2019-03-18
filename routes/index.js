@@ -9,6 +9,6 @@ const router = express.Router();
 router
   .use('/owner', ownerRoutes)
   .use('/staff', staffRoutes)
-  .use('/customer', customerRoutes);
+  .use('/', customerRoutes);
 
 export default router;
