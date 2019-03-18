@@ -1,6 +1,10 @@
 const staffCtrl = {};
 
-staffCtrl.something = () => {
+staffCtrl.getQueue = () => {
+  // something
+};
+
+staffCtrl.setBarStatus = () => {
   // something
 };
 
