@@ -1,12 +1,13 @@
 {
   "name": "barq-server",
   "version": "1.0.0",
-  "description": "BarQ Back Office",
+  "description": "BarQ Server",
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
     "precommit": "npm run lint",
-    "test": "test"
+    "test": "test",
+    "dev": "npx nodemon --exec babel-node index.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,18 @@
     "url": "https://github.com/felixweinberger/barq-server/issues"
   },
   "homepage": "https://github.com/felixweinberger/barq-server#readme",
-  "dependencies": {},
+  "dependencies": {
+    "@babel/cli": "^7.0.0-rc.1",
+    "@babel/core": "^7.0.0-rc.1",
+    "@babel/node": "^7.0.0-rc.1",
+    "@babel/preset-env": "^7.0.0-rc.1",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.19",
+    "morgan": "^1.9.1",
+    "redis": "^2.8.0"
+  },
   "devDependencies": {
     "eslint": "^5.15.2",
     "eslint-config-airbnb": "^17.1.0",
@@ -26,6 +38,8 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
     "husky": "^1.3.1",
+    "nodemon": "^1.18.10",
+    "stylelint": "^9.10.1",
     "stylelint-config-standard": "^18.2.0"
   }
 }

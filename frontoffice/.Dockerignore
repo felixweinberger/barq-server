@@ -1,2 +1,0 @@
-# Prevent node_modules from being copied to docker
-node_modules
