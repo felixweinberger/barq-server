@@ -43,7 +43,7 @@ services:
     container_name: ${MONGO_NAME}
     # Designate a local directory to persist data
     volumes:
-     - ./data:/data/${MONGO_NAME}
+     - ./data/${MONGO_NAME}:/data/${MONGO_NAME}
     # Expose the correct port for connections
     ports:
      - "${MONGO_PORT}:27017"
@@ -58,7 +58,7 @@ services:
     container_name: ${REDIS_NAME}
     # Set the volumes for potentially persisting data
     volumes: 
-      - ./cache:/data/${REDIS_NAME}
+      - ./data/${REDIS_NAME}:/data/${REDIS_NAME}
     # Set the ports
     ports:
       - "${REDIS_PORT}:6379"
