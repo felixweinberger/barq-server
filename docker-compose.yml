@@ -58,7 +58,7 @@ services:
     container_name: ${REDIS_NAME}
     # Set the volumes for potentially persisting data
     volumes: 
-      - ./cache:/data
+      - ./cache:/data/${REDIS_NAME}
     # Set the ports
     ports:
       - "${REDIS_PORT}:6379"
