@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import stripeCharger from 'stripe';
-import customerModel from '../../models/customer';
+import customerModel from '../../models/customer/customer.model';
 
 const customerCtrl = {};
 

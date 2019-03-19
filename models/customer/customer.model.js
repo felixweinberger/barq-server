@@ -1,4 +1,3 @@
-// import mongoose from '../../db/db';
 
 const customerModel = {};
 
