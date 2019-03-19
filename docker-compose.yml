@@ -34,7 +34,7 @@ services:
     # Make sure to keep restarting the server if it fails
     restart: always
     # Run the appropriate command for starting the server when ready
-    command: ./scripts/wait-for.sh db:27017 -- npm run ${ENV}
+    command: ./scripts/wait-for.sh ${MONGO_NAME}:${MONGO_PORT} -- npm run ${ENV}
      
   # Set up the mongo db for the backoffice services
   mongo:
