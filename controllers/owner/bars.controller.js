@@ -1,7 +1,7 @@
 const Owner = require('../../models/owner/owners.model.js');
 
 module.exports.postOne = (req, res) => {
-  const email = 'rachel@cwbar.com';
+  const { email } = req.user;
   const newBar = req.body;
   Owner.findOneAndUpdate({ email }, { $push: { bars: newBar } }, { new: true })
     .then(response => res.status(201).send(response))
@@ -9,7 +9,7 @@ module.exports.postOne = (req, res) => {
 };
 
 module.exports.deleteOne = (req, res) => {
-  const email = 'rachel@cwbar.com';
+  const { email } = req.user;
   Owner.findOneAndUpdate({ email }, { $pull: { bars: { _id: req.params.barId } } }, { new: true })
     .then(() => res.status(201).send())
     .catch(error => res.status(500).send('Error deleting bar: ', error));
