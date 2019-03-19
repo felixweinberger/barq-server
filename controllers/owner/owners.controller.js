@@ -7,15 +7,15 @@ module.exports.postOne = (req, res) => {
 };
 
 module.exports.getOne = (req, res) => {
-  const { email } = req.user;
+  const email = 'rachel@cwbar.com';
   Owner.findOne({ email })
     .then(response => res.status(200).send(response))
     .catch(error => res.status(500).send('Error fetching owner data: ', error));
 };
 
 module.exports.deleteOne = (req, res) => {
-  const { email } = req.user;
-  Owner.find({ email })
-    .then(() => res.sendStatus(204))
+  const email = 'rachel@cwbar.com';
+  Owner.findOneAndDelete({ email })
+    .then(() => res.status(204).send())
     .catch(error => res.status(500).send('Error deleting owner: ', error));
 };

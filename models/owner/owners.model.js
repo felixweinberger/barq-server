@@ -12,13 +12,11 @@ const Category = new mongoose.Schema({
 }, { id: false });
 
 const Menu = new mongoose.Schema({
-  menuId: Number,
   name: String,
   categories: [Category],
-}, { id: false });
+});
 
 const Staff = new mongoose.Schema({
-  staffId: Number,
   name: String,
   email: String,
 });

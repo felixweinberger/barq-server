@@ -6,7 +6,6 @@ router
   .post('/', ctrl.owner.postOne)
   .get('/', ctrl.owner.getOne)
   .delete('/', ctrl.owner.deleteOne)
-  .get('/bars', ctrl.bars.getAll)
   .post('/bars', ctrl.bars.postOne)
   .delete('/bars/:barId', ctrl.bars.deleteOne)
   .post('/bars/:barId/menus', ctrl.menu.postOne)
