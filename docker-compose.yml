@@ -30,6 +30,7 @@ services:
       - MONGO_PORT=${MONGO_PORT}
       - REDIS_URL=${REDIS_URL}
       - REDIS_PORT=${REDIS_PORT}
+      - STRIPE_KEY=${STRIPE_KEY}
     # Make sure to keep restarting the server if it fails
     restart: always
     # Run the appropriate command for starting the server when ready
