@@ -19,7 +19,7 @@ const ENV = process.env.ENV || 'dev';
 app
   .use(logger('tiny'))
   .use(cors())
-  .use(express.static('local'))
+  .use(express.static('public'))
   .use(express.json())
   .use(bodyParser.text('text/plain'))
   .use(routes);

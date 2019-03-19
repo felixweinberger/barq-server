@@ -1,0 +1,57 @@
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io('/ax9249', {
+    query: {
+      bar: '/ax9249',
+      token: 'bartender',
+    }
+  });
+
+  // define the possible stati for an order
+  const stati = ['paid', 'in preparation', 'ready for pickup', 'delivered'];
+  const queue = [];
+
+  // update all staff on status_update
+  socket.on('STATUS_UPDATE', (orderId, status) => {
+    queue.forEach(order => {
+      if (order.orderId === orderId) order.status = status;
+    });
+    console.log(queue);
+  });
+
+  // update all staff on new_order
+  socket.on('NEW_ORDER', order => {
+    queue.push(order);
+    console.log(queue);
+  });
+
+  // emit status_update when staff presses button, remove from queue if delivered
+  const updateStatus = (orderId) => {
+    let nextStatus = [];
+    queue.forEach((order, i) => {
+      if (order.orderId === orderId) {
+        order.status = stati[stati.indexOf(order.status) + 1];
+        nextStatus = order.status;
+        socket.emit('STATUS_UPDATE', orderId, nextStatus);
+        if (nextStatus === 'delivered') {
+          const removed = queue.splice(i, 1)[0];
+          console.log('delivered: ', removed);
+        }
+      }
+    });
+  }
+</script>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Staff</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <p>Bar: /ax9249</p>
+  <button onclick="updateStatus(359)">Update status</button>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<script src="/socket.io/socket.io.js"></script>
+<script>
+
+  const connectSocket = () => {
+    const socket = io('/ax9249', {
+      query: {
+        bar: '/ax9249',
+        orderNumber: 359,
+      }
+    });
+
+    // construct the order that was confirmed and paid by stripe
+    const myOrder = {
+      "orderId": 359,
+      "status": 'paid',
+      "items": [
+        {
+          "name": "Corona",
+          "price": 3.6,
+          "quantity": 2
+        },
+        {
+          "name": "Becks",
+          "price": 3.4,
+          "quantity": 1
+        }
+      ]
+    };
+
+    // send the new order details to the server
+    socket.emit('NEW_ORDER', myOrder);
+    console.log(myOrder);
+  
+    // when staff update the status, update the customer
+    socket.on('STATUS_UPDATE', status => {
+      myOrder.status = status;
+      console.log(myOrder);
+
+      if (status === 'delivered') socket.disconnect();
+    });
+  }
+  
+</script>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Customer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <p>Bar: /ax9249</p>
+  <button onclick="connectSocket()">Submit order</button>
+</body>
+</html>
