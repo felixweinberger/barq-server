@@ -1,7 +1,7 @@
 const Owner = require('../../models/owner/owners.model.js');
 
 module.exports.postOne = (req, res) => {
-  const email = 'rachel@cwbar.com';
+  const { email } = req.user;
   const { barId } = req.params;
   const newMenu = req.body;
   Owner.findOne({ email })
@@ -15,7 +15,7 @@ module.exports.postOne = (req, res) => {
 };
 
 module.exports.deleteOne = (req, res) => {
-  const email = 'rachel@cwbar.com';
+  const { email } = req.user;
   const { barId, menuId } = req.params;
   Owner.findOne({ email })
     .then((data) => {
