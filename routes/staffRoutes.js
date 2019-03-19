@@ -1,12 +1,14 @@
 import express from 'express';
 import staff from '../controllers/staff';
 
+console.log(typeof staff.getQueue);
+
 const router = express.Router();
 
 // get queue for given barId given they are members
-router.get('/staff/:barId/queue', staff.getQueue);
+router.get('/:barId/queue', staff.getQueue);
 
 // open/close the bar for orders
-router.post('/staff/:barId/open', staff.setBarStatus);
+router.post('/:barId/open', staff.setBarStatus);
 
 export default router;
