@@ -86,6 +86,7 @@ staffCtrl.getQueue = async (req, res) => {
 
   // TODO
   // GET THE QUEUE FOR THE ACTUAL BAR HERE
+  // AUTHORIZE THE STAFF MEMBER FOR THIS BAR
 
   // have to replace this with getting the actual queue
   const currentQueue = {
@@ -104,6 +105,7 @@ staffCtrl.setBarStatus = async (req, res) => {
 
   // TODO
   // SET THE STATUS FOR THE ACTUAL BAR HERE
+  // AUTHORIZE THE STAFF MEMBER FOR THIS BAR
 
   // have to replace this with getting the actual queue
   const currentQueue = {
