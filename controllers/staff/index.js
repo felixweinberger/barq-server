@@ -12,10 +12,12 @@ const mockQueue = {
         {
           name: 'Budweiser',
           price: 2.99,
+          quantity: 1,
         },
         {
           name: 'Coors',
           price: 3.5,
+          quantity: 1,
         },
       ],
       status: 'delivered',
@@ -28,10 +30,12 @@ const mockQueue = {
         {
           name: 'Budweiser',
           price: 2.99,
+          quantity: 1,
         },
         {
           name: 'Coors',
           price: 3.5,
+          quantity: 1,
         },
       ],
       status: 'paid',
@@ -42,10 +46,12 @@ const mockQueue = {
         {
           name: 'Budweiser',
           price: 2.99,
+          quantity: 1,
         },
         {
           name: 'Coors',
           price: 3.5,
+          quantity: 1,
         },
       ],
       status: 'in preparation',
@@ -56,10 +62,12 @@ const mockQueue = {
         {
           name: 'Budweiser',
           price: 2.99,
+          quantity: 1,
         },
         {
           name: 'Coors',
           price: 3.5,
+          quantity: 1,
         },
       ],
       status: 'ready for pickup',
@@ -70,10 +78,12 @@ const mockQueue = {
         {
           name: 'Budweiser',
           price: 2.99,
+          quantity: 1,
         },
         {
           name: 'Coors',
           price: 3.5,
+          quantity: 1,
         },
       ],
       status: 'ready for pickup',
