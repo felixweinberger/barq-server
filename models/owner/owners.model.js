@@ -1,9 +1,5 @@
-/* eslint-disable no-console */
 import shortid from 'shortid';
-
 import mongoose from '../../db/db';
-
-const { ObjectId } = mongoose.Schema.Types;
 
 const Item = new mongoose.Schema({
   name: String,
@@ -28,7 +24,7 @@ const Staff = new mongoose.Schema({
 });
 
 const Bar = new mongoose.Schema({
-  barId: { type: String, default: shortid.generate },
+  _id: { type: String, default: shortid.generate },
   name: String,
   currency: String,
   menus: [Menu],
@@ -36,8 +32,8 @@ const Bar = new mongoose.Schema({
 });
 
 const ownerSchema = new mongoose.Schema({
-  userId: ObjectId,
   email: String,
+  name: String,
   bars: [Bar],
 });
 

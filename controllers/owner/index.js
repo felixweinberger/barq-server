@@ -1,8 +1,4 @@
-const ownerCtrl = {};
-
-ownerCtrl.owner = require('./owners.controller.js');
-ownerCtrl.bars = require('./bars.controller.js');
-ownerCtrl.menu = require('./menus.controller.js');
-ownerCtrl.staff = require('./staff.controller.js');
-
-export default ownerCtrl;
+module.exports.owner = require('./owners.controller.js');
+module.exports.bars = require('./bars.controller.js');
+module.exports.menu = require('./menus.controller.js');
+module.exports.staff = require('./staff.controller.js');
