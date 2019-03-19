@@ -1,4 +1,4 @@
-/* eslint no-console: 0 */
+/* eslint-disable no-console */
 
 const orderBarSockets = {}; // orderNum: socket
 
@@ -27,7 +27,7 @@ const ioConfig = (io) => {
             orderBarSockets[bar][orderId].emit('STATUS_UPDATE', newStatus); // emit to client
             io.of(bar).to('staff').emit('STATUS_UPDATE', orderId, newStatus); // emit to staff room
           } else {
-            console.log('Order does not exist'); // If order doesn't exist, log issue
+            console.error('Order does not exist'); // If order doesn't exist, log issue
           }
         });
 
