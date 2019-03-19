@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import express from 'express';
 import cors from 'cors';
-import bodyParser from 'body-parser';
 import logger from 'morgan';
 import dotenv from 'dotenv';
 import socket from './socket';
@@ -21,7 +20,6 @@ app
   .use(cors())
   .use(express.static('public'))
   .use(express.json())
-  .use(bodyParser.text('text/plain'))
   .use(routes);
 
 socket(io);
