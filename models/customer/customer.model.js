@@ -1,45 +1,24 @@
+const Owner = require('../owner/owners.model.js');
 
 const customerModel = {};
 
-const mockMenu = {
-  barId: 'a791xu',
-  name: 'Cheers',
-  currency: 'GBP',
-  vat: 0.13,
-  open: 'true',
-  menu: [
-    {
-      name: 'Beers',
-      items: [
-        {
-          name: 'Budweiser',
-          price: 2.99,
-        },
-        {
-          name: 'Coors',
-          price: 3.5,
-        },
-      ],
-    },
-    {
-      name: 'Cocktails',
-      items: [
-        {
-          name: 'Dark n Stormy',
-          price: 5.99,
-        },
-        {
-          name: 'Long Island Iced Tea',
-          price: 4.25,
-        },
-      ],
-    },
-  ],
-};
+customerModel.getMenu = async (barId) => {
+  const owner = await Owner.findOne({ bars: { $elemMatch: { _id: barId } } });
 
-customerModel.getMenu = barId => ({
-  ...mockMenu,
-  barId,
-});
+  // TODO: fix this to not just take the first menu, but the active one
+  const { name, currency, vat } = owner.bars.id(barId);
+  const items = owner.bars.id(barId).menus[0].categories.map(category => category);
+
+  const menu = {
+    barId,
+    name,
+    currency,
+    vat: vat || 0.13, // TODO: add property to database for this
+    open: false, // TODO: check the queue for this status
+    menu: items,
+  };
+
+  return menu;
+};
 
 export default customerModel;

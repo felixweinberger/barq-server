@@ -94,9 +94,8 @@ const mockQueue = {
 staffCtrl.getQueue = async (req, res) => {
   const { barId } = req.params;
 
-  // TODO
-  // GET THE QUEUE FOR THE ACTUAL BAR HERE
-  // AUTHORIZE THE STAFF MEMBER FOR THIS BAR
+  // TODO: GET THE QUEUE FOR THE ACTUAL BAR HERE
+  // TODO: AUTHORIZE THE STAFF MEMBER FOR THIS BAR
 
   // have to replace this with getting the actual queue
   const currentQueue = {
@@ -113,9 +112,8 @@ staffCtrl.setBarStatus = async (req, res) => {
   const { barId } = req.params;
   const { open } = req.body;
 
-  // TODO
-  // SET THE STATUS FOR THE ACTUAL BAR HERE
-  // AUTHORIZE THE STAFF MEMBER FOR THIS BAR
+  // TODO: SET THE STATUS FOR THE ACTUAL BAR HERE
+  // TODO: AUTHORIZE THE STAFF MEMBER FOR THIS BAR
 
   // have to replace this with getting the actual queue
   const currentQueue = {

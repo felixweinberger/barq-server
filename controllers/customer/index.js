@@ -33,7 +33,7 @@ customerCtrl.getMenu = async (req, res) => {
   } catch (e) {
     console.log('Something went wrong while fetching the menu');
     res.status(500);
-    res.send({ Error: 'Something went wrong with the payment' });
+    res.send({ Error: 'Something went wrong while fetching the menu' });
   }
 };
 
