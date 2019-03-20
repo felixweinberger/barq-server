@@ -5,7 +5,7 @@ import { authorize } from '../middleware/authorization';
 const router = require('express').Router();
 
 router
-  .post('/', ctrl.owner.postOne)
+  .post('/', authorize, ctrl.owner.postOne)
   .get('/', authorize, ctrl.owner.getOne)
   .delete('/', authorize, ctrl.owner.deleteOne)
   .post('/bars', authorize, ctrl.bars.postOne)

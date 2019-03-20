@@ -1,7 +1,8 @@
 const Owner = require('../../models/owner/owners.model.js');
 
 module.exports.postOne = (req, res) => {
-  Owner.create(req.body)
+  const { email, name } = req.user;
+  Owner.create({ email, name })
     .then(response => res.status(201).send(response))
     .catch(error => res.status(500).send('Error creating new owner: ', error));
 };
