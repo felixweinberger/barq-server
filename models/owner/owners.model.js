@@ -25,6 +25,8 @@ const Bar = new mongoose.Schema({
   _id: { type: String, default: shortid.generate },
   name: String,
   currency: String,
+  vat: Number,
+  activeMenu: Menu,
   menus: [Menu],
   staff: [Staff],
 });
