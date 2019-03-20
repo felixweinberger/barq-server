@@ -16,7 +16,7 @@ export const createQueue = async (barId) => {
       barId,
       name,
       currency,
-      vat,
+      vat, // have to adjust this from backend
       open,
       nextOrderId: 1,
       queue: [],
@@ -41,7 +41,6 @@ export const addToQueue = async (barId, order) => {
   const queue = await getQueue(barId);
   queue.queue.push(order);
   queue.nextOrderId += 1;
-  console.log(queue);
   return queue;
 };
 
@@ -55,13 +54,11 @@ export const updateOrderStatus = async (barId, orderId, newStatus) => {
       }
     }
   });
-  console.log(queue);
   return queue;
 };
 
 export const setQueueStatus = async (barId, newStatus) => {
   const queue = await getQueue(barId);
   queue.open = newStatus;
-  console.log(queue);
   return queues[barId];
 };

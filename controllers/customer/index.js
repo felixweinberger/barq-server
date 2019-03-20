@@ -25,7 +25,6 @@ customerCtrl.pay = async (req, res) => {
   const { barId } = req.params;
   const { nextOrderId } = await getQueue(barId);
   const { stripe, order } = req.body;
-  console.log(stripe);
   try {
     await stripeAccount.charges.create(stripe);
     const confirmation = {
