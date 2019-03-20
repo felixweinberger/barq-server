@@ -15,8 +15,8 @@ customerModel.getMenu = async (barId) => {
       barId,
       name,
       currency,
-      vat: vat || 0.13, // TODO: add property to database for this
-      open: false, // TODO: check the queue for this status
+      vat: vat || 13, // TODO: add property to database for this
+      open: true, // TODO: check the queue for this status
       menu: items,
     };
 

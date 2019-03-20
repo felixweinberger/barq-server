@@ -25,12 +25,12 @@ services:
     environment:
       - ENV=${ENV}
       - SERVER_PORT=${SERVER_PORT}
-      - MONGO_URL=${MONGO_URL}
+      - MONGO_URL=${MONGO_DOCKER_URL}
       - MONGO_NAME=${MONGO_NAME}
       - MONGO_PORT=${MONGO_PORT}
-      - REDIS_URL=${REDIS_URL}
+      - REDIS_URL=${REDIS_DOCKER_URL}
       - REDIS_PORT=${REDIS_PORT}
-      - STRIPE_KEY=${STRIPE_KEY}
+      - STRIPE_SK=${STRIPE_SK}
     # Make sure to keep restarting the server if it fails
     restart: always
     # Run the appropriate command for starting the server when ready
