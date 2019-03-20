@@ -19,3 +19,10 @@ module.exports.deleteOne = (req, res) => {
     .then(() => res.status(204).send())
     .catch(error => res.status(500).send('Error deleting owner: ', error));
 };
+
+
+// module.exports.getOne = (req, res) => {
+//   Owner.findOne({ bars: { $elemMatch: { _id: "HgTaeiK_g" } } })
+//     .then(response => res.status(200).send(response))
+//     .catch(error => res.status(500).send('Error fetching owner data: ', error));
+// };

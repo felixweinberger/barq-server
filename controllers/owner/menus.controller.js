@@ -27,3 +27,17 @@ module.exports.deleteOne = (req, res) => {
     .then(response => res.status(204).send(response))
     .catch(error => res.status(500).send('Error posting bar: ', error));
 };
+
+module.exports.makeActive = (req, res) => {
+  const { email } = req.user;
+  const { barId, menuId } = req.params;
+  Owner.findOne({ email })
+    .then((data) => {
+      const menu = data.bars.id(barId).menus.id(menuId);
+      data.bars.id(barId).activeMenu = menu; //eslint-disable-line
+      data.save();
+      return data;
+    })
+    .then(response => res.status(201).send(response))
+    .catch(error => res.status(500).send('Error creating bar: ', error));
+};
