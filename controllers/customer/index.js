@@ -40,7 +40,9 @@ customerCtrl.getMenu = async (req, res) => {
 customerCtrl.pay = async (req, res) => {
   const { stripe, order } = req.body;
   try {
-    await stripeAccount.charges.create({ stripe });
+    await stripeAccount.charges.create(stripe);
+
+    // TODO: order confirmation needs actual order number! not random
     const orderConfirmation = {
       ...mockPaymentConfirmation,
       orderId: Math.floor(Math.random() * 1000),

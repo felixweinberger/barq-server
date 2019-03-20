@@ -1,0 +1,447 @@
+{
+	"info": {
+		"_postman_id": "04832ee8-62bd-4599-ad74-4c0ce31457ca",
+		"name": "BarQ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Menu",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/mIgBWHDEx/menu",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"mIgBWHDEx",
+								"menu"
+							]
+						},
+						"description": "Get the menu for the given barId."
+					},
+					"response": []
+				},
+				{
+					"name": "Pay",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/javascript",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"stripe\": {\n    \"amount\": 999,\n    \"currency\": \"usd\",\n    \"description\": \"Example charge\",\n    \"source\": \"STRIPE_TOKEN\",\n    \"statement_descriptor\": \"Custom descriptor\"\n  },\n  \"order\": {\n    \"items\": [\n      {\n        \"name\": \"Corona\",\n        \"price\": 3.6,\n        \"quantity\": 2\n      },\n      {\n        \"name\": \"Becks\",\n        \"price\": 3.4,\n        \"quantity\": 1\n      }\n    ]\n  }\n}"
+						},
+						"url": {
+							"raw": "{{url}}/abcdef/pay",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"abcdef",
+								"pay"
+							]
+						},
+						"description": "Pay for an order"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Owner",
+			"item": [
+				{
+					"name": "Authorize owner",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "AUTH_TOKEN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/owner/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"owner",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create owner",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"rachel@cwbar.com\",\n    \"name\": \"Rachel Bonny\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/owner/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"owner",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete owner",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "AUTH_TOKEN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/owner/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"owner",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create bar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "AUTH_TOKEN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n    \"name\": \"Codeworks Bar\",\n    \"currency\": \"EUR\",\n    \"vat\": 21\n}"
+						},
+						"url": {
+							"raw": "{{url}}/owner/bars",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"owner",
+								"bars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete bar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "AUTH_TOKEN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/owner/bars/OinFyr4Ei",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"owner",
+								"bars",
+								"OinFyr4Ei"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create menu",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "AUTH_TOKEN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Christmas\",\n    \"categories\":[{\n    \"name\": \"Hot Drinks\",\n    \"items\": [{\n        \"name\": \"Mulled Cider\",\n        \"price\": 3\n        }]\n    }]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/owner/bars/mIgBWHDEx/menus",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"owner",
+								"bars",
+								"mIgBWHDEx",
+								"menus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete menu",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "AUTH_TOKEN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/owner/bars/mIgBWHDEx/menus",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"owner",
+								"bars",
+								"mIgBWHDEx",
+								"menus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create staff member",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "AUTH_TOKEN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Felix Weinberger\",\n    \"email\": \"felix@cwbar.com\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/owner/bars/mIgBWHDEx/staff",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"owner",
+								"bars",
+								"mIgBWHDEx",
+								"staff"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete staff member",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/owner/bars/mIgBWHDEx/staff/5c91278626c3db2e54b3a4ad",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"owner",
+								"bars",
+								"mIgBWHDEx",
+								"staff",
+								"5c91278626c3db2e54b3a4ad"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Staff",
+			"item": [
+				{
+					"name": "Queue",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "AUTH_TOKEN",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/staff/mIgBWHDEx/queue",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"staff",
+								"mIgBWHDEx",
+								"queue"
+							]
+						},
+						"description": "Get the latest queue for the bar"
+					},
+					"response": []
+				},
+				{
+					"name": "Open / close bar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"open\": false\n}"
+						},
+						"url": {
+							"raw": "{{url}}/staff/560/open",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"staff",
+								"560",
+								"open"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

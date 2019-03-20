@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { addToQueue, updateOrderStatus } from './db/queue';
 
 const orderBarSockets = {}; // orderNum: socket
 
@@ -10,6 +11,7 @@ const ioConfig = (io) => {
     // if no namespace for this bar yet
     if (!orderBarSockets[bar]) {
       orderBarSockets[bar] = {};
+      const barId = bar.slice(1);
 
       io.of(bar).on('connect', (socket) => {
         const { orderNumber, token } = socket.handshake.query;
@@ -24,6 +26,8 @@ const ioConfig = (io) => {
         socket.on('STATUS_UPDATE', (orderId, newStatus) => {
           // what to do when a STATUS_UPDATE event is received
           if (orderBarSockets[bar][orderId]) { // Check if order exists in bar
+            // update the cached queue on the server
+            updateOrderStatus(barId, orderId, newStatus);
             orderBarSockets[bar][orderId].emit('STATUS_UPDATE', newStatus); // emit to client
             io.of(bar).to('staff').emit('STATUS_UPDATE', orderId, newStatus); // emit to staff room
           } else {
@@ -33,6 +37,9 @@ const ioConfig = (io) => {
 
         // needs to be replaced with emitting on API call, not on connect
         socket.on('NEW_ORDER', (newOrder) => {
+          // update the cached queue on the server
+          addToQueue(barId, newOrder);
+
           // emit new order to all bar staff
           io.of(bar).to('staff').emit('NEW_ORDER', newOrder);
         });
