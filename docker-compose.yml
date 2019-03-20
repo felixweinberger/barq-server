@@ -18,6 +18,9 @@ services:
     depends_on:
       - mongo
       - redis
+    # Connect to the barq network
+    networks:
+      - barq-net
     # Define the ports on which the local machine will be able to access the server (local:container)
     ports:
       - "${SERVER_PORT}:${SERVER_PORT}"
@@ -45,6 +48,9 @@ services:
     # Designate a local directory to persist data
     volumes:
      - ./data/${MONGO_NAME}:/data/${MONGO_NAME}
+    # Connect to the barq network
+    networks:
+      - barq-net
     # Expose the correct port for connections
     ports:
      - "${MONGO_PORT}:27017"
@@ -60,8 +66,16 @@ services:
     # Set the volumes for potentially persisting data
     volumes: 
       - ./data/${REDIS_NAME}:/data/${REDIS_NAME}
+    # Set the network mode to bridge to prevent making new networks
+    networks:
+      - barq-net
     # Set the ports
     ports:
       - "${REDIS_PORT}:6379"
     # Make sure to keep restarting the server if it fails
     restart: always
+
+networks:
+
+  barq-net:
+    driver: bridge
