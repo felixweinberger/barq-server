@@ -46,6 +46,7 @@ export const getOrder = async (barId, orderId) => {
 
 export const addToQueue = async (barId, order) => {
   const queue = await getQueue(barId);
+  if (queue.queue.concat(queue.history).find(ord => ord.orderId === order.orderId)) return null;
   queue.queue.push(order);
   queue.nextOrderId += 1;
   return queue;

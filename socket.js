@@ -21,7 +21,6 @@ const ioConfig = (io) => {
         if (orderNumber) {
           orderBarSockets[bar][orderNumber] = socket;
           const orderStatus = await getOrderStatus(barId, orderNumber);
-          console.log('about to emit', orderNumber, orderStatus);
           if (orderStatus) socket.emit('STATUS_UPDATE', orderStatus);
         }
 
@@ -43,13 +42,13 @@ const ioConfig = (io) => {
         // needs to be replaced with emitting on API call, not on connect
         socket.on('NEW_ORDER', async (newOrder) => {
           // update the cached queue on the server
-          await addToQueue(barId, newOrder);
+          const isNewOrder = await addToQueue(barId, newOrder);
           // need to check if orderNumber already exists, if yes do not create new order
           const orderStatus = await getOrderStatus(barId, orderNumber);
-          socket.emit('STATUS_UPDATE', orderStatus);
-
+          console.log(orderStatus);
           // emit new order to all bar staff
-          io.of(bar).to('staff').emit('NEW_ORDER', newOrder);
+          if (orderStatus) socket.emit('STATUS_UPDATE', orderStatus);
+          if (isNewOrder) io.of(bar).to('staff').emit('NEW_ORDER', newOrder);
         });
       });
     }
