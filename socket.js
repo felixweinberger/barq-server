@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { addToQueue, updateOrderStatus, getOrder } from './db/queue';
+import { addToQueue, updateOrderStatus, getOrderStatus } from './db/queue';
 
 // key: bar, value: { key: orderNum, value: socket }
 const orderBarSockets = {};
@@ -14,15 +14,15 @@ const ioConfig = (io) => {
       orderBarSockets[bar] = {};
       const barId = bar.slice(1);
 
-      // if someone connects to this bar
-      io.of(bar).on('connect', (socket) => {
+      io.of(bar).on('connect', async (socket) => {
         const { orderNumber, token } = socket.handshake.query;
 
-        // get orderNumber and send current status if already exists
+        // get orderNumber and/or token from socket connection
         if (orderNumber) {
           orderBarSockets[bar][orderNumber] = socket;
-          const currentOrder = getOrder(barId);
-          if (currentOrder) socket.emit('STATUS_UPDATE', currentOrder.status);
+          const orderStatus = await getOrderStatus(barId, orderNumber);
+          console.log('about to emit', orderNumber, orderStatus);
+          if (orderStatus) socket.emit('STATUS_UPDATE', orderStatus);
         }
 
         // if it's a staff member (token exists), join staff room
@@ -40,9 +40,15 @@ const ioConfig = (io) => {
           }
         });
 
-        // when a new order is made, update the queue and staff members
-        socket.on('NEW_ORDER', (newOrder) => {
-          addToQueue(barId, newOrder);
+        // needs to be replaced with emitting on API call, not on connect
+        socket.on('NEW_ORDER', async (newOrder) => {
+          // update the cached queue on the server
+          await addToQueue(barId, newOrder);
+          // need to check if orderNumber already exists, if yes do not create new order
+          const orderStatus = await getOrderStatus(barId, orderNumber);
+          socket.emit('STATUS_UPDATE', orderStatus);
+
+          // emit new order to all bar staff
           io.of(bar).to('staff').emit('NEW_ORDER', newOrder);
         });
       });

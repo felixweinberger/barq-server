@@ -51,6 +51,15 @@ export const addToQueue = async (barId, order) => {
   return queue;
 };
 
+export const getOrderStatus = async (barId, orderId) => {
+  const queue = await getQueue(barId);
+  const foundOrder = queue.queue
+    .concat(queue.history)
+    .find(order => order.orderId === Number(orderId));
+  if (foundOrder) return foundOrder.status;
+  return null;
+};
+
 export const updateOrderStatus = async (barId, orderId, newStatus) => {
   const queue = await getQueue(barId);
   queue.queue.forEach((el, i) => {
