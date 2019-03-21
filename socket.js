@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { addToQueue, updateOrderStatus } from './db/queue';
+import { addToQueue, updateOrderStatus, getOrderStatus } from './db/queue';
 
 const orderBarSockets = {}; // orderNum: socket
 
@@ -13,11 +13,16 @@ const ioConfig = (io) => {
       orderBarSockets[bar] = {};
       const barId = bar.slice(1);
 
-      io.of(bar).on('connect', (socket) => {
+      io.of(bar).on('connect', async (socket) => {
         const { orderNumber, token } = socket.handshake.query;
 
         // get orderNumber and/or token from socket connection
-        if (orderNumber) orderBarSockets[bar][orderNumber] = socket;
+        if (orderNumber) {
+          orderBarSockets[bar][orderNumber] = socket;
+          const orderStatus = await getOrderStatus(barId, orderNumber);
+          console.log('about to emit', orderNumber, orderStatus);
+          if (orderStatus) socket.emit('STATUS_UPDATE', orderStatus);
+        }
 
         // if it's a staff member (token exists), save the socket
         if (token) socket.join('staff'); // if it's a bartender (has token), join the staff room
@@ -36,9 +41,12 @@ const ioConfig = (io) => {
         });
 
         // needs to be replaced with emitting on API call, not on connect
-        socket.on('NEW_ORDER', (newOrder) => {
+        socket.on('NEW_ORDER', async (newOrder) => {
           // update the cached queue on the server
-          addToQueue(barId, newOrder);
+          await addToQueue(barId, newOrder);
+          // need to check if orderNumber already exists, if yes do not create new order
+          const orderStatus = await getOrderStatus(barId, orderNumber);
+          socket.emit('STATUS_UPDATE', orderStatus);
 
           // emit new order to all bar staff
           io.of(bar).to('staff').emit('NEW_ORDER', newOrder);
