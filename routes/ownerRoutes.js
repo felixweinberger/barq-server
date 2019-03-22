@@ -5,6 +5,8 @@ import { authorize } from '../middleware/authorization';
 const router = require('express').Router();
 
 router
+  .get('/login', ctrl.owner.login)
+  .post('/register', ctrl.owner.register)
   .post('/', authorize, ctrl.owner.postOne)
   .get('/', authorize, ctrl.owner.getOne)
   .delete('/', authorize, ctrl.owner.deleteOne)

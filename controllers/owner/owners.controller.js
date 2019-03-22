@@ -1,5 +1,16 @@
 const Owner = require('../../models/owner/owners.model.js');
 
+module.exports.register = (req) => {
+  // do things
+  // expect username and password
+  const { username, password } = req.body;
+  console.log(username, password);
+};
+
+module.exports.login = (/* req, res */) => {
+  // do things
+};
+
 module.exports.postOne = (req, res) => {
   const { email, name } = req.user;
   Owner.create({ email, name })
