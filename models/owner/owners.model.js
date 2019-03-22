@@ -32,8 +32,9 @@ const Bar = new mongoose.Schema({
 });
 
 const ownerSchema = new mongoose.Schema({
-  email: String,
-  name: String,
+  email: { type: String, unique: true, required: true },
+  name: { type: String, required: true },
+  password: { type: String, required: true },
   bars: [Bar],
 });
 

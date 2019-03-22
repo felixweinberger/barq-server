@@ -1,24 +1,19 @@
+import bcrypt from 'bcrypt';
+
 const Owner = require('../../models/owner/owners.model.js');
 
-module.exports.register = (req) => {
-  // do things
-  // expect username and password
-  const { username, password } = req.body;
-  console.log(username, password);
+module.exports.register = async (req, res) => {
+  try {
+    const { email, name, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const response = await Owner.create({ email, name, password: hashedPassword });
+    res.status(201).send(response);
+  } catch (e) {
+    res.status(401).send('Error creating new owner');
+  }
 };
 
-module.exports.login = (/* req, res */) => {
-  // do things
-};
-
-module.exports.postOne = (req, res) => {
-  const { email, name } = req.user;
-  Owner.create({ email, name })
-    .then(response => res.status(201).send(response))
-    .catch(error => res.status(500).send('Error creating new owner: ', error));
-};
-
-module.exports.getOne = (req, res) => {
+module.exports.login = (req, res) => {
   const { email } = req.user;
   Owner.findOne({ email })
     .then(response => res.status(200).send(response))
