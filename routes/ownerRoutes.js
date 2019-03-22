@@ -1,5 +1,5 @@
 import ctrl from '../controllers/owner';
-import { authorize } from '../middleware/authorization';
+import authorize from '../middleware/authorization';
 // const jwt = require('express-jwt');
 
 const router = require('express').Router();
@@ -7,6 +7,7 @@ const router = require('express').Router();
 router
   .post('/', ctrl.owner.register)
   .get('/', ctrl.owner.login)
+  .get('/me', ctrl.owner.me)
   .delete('/', authorize, ctrl.owner.deleteOne)
   .post('/bars', authorize, ctrl.bars.postOne)
   .delete('/bars/:barId', authorize, ctrl.bars.deleteOne)

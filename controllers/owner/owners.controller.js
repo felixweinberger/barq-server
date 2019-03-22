@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const Owner = require('../../models/owner/owners.model.js');
 
@@ -13,11 +14,32 @@ module.exports.register = async (req, res) => {
   }
 };
 
-module.exports.login = (req, res) => {
-  const { email } = req.user;
-  Owner.findOne({ email })
-    .then(response => res.status(200).send(response))
-    .catch(error => res.status(500).send('Error fetching owner data: ', error));
+module.exports.login = async (req, res) => {
+  try {
+    const hash = req.headers.authorization.split(' ')[1];
+    const decoded = Buffer.from(hash, 'base64').toString();
+    const [email, password] = decoded.split(':');
+    const user = await Owner.findOne({ email });
+    const isCorrectPassword = await bcrypt.compare(password, user.password);
+    if (!isCorrectPassword) throw new Error();
+    const token = jwt.sign({ user }, process.env.JWT_SK);
+    res.status(200).send({ user, token });
+  } catch (e) {
+    res.status(401).send('Error logging in.');
+  }
+};
+
+module.exports.me = async (req, res) => {
+  try {
+    const hash = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(hash, process.env.JWT_SK);
+    const { user } = decoded;
+    const response = await Owner.findOne({ email: user.email });
+    console.log(response);
+    res.status(200).send({ user: response });
+  } catch (e) {
+    res.status(401).send('Error authorizing.');
+  }
 };
 
 module.exports.deleteOne = (req, res) => {

@@ -10,7 +10,9 @@ module.exports.postOne = (req, res) => {
 
 module.exports.deleteOne = (req, res) => {
   const { email } = req.user;
-  Owner.findOneAndUpdate({ email }, { $pull: { bars: { _id: req.params.barId } } }, { new: true })
-    .then(() => res.status(204).send())
-    .catch(error => res.status(500).send('Error deleting bar: ', error));
+  Owner.findOneAndUpdate(
+    { email }, { $pull: { bars: { _id: req.params.barId } } }, { new: true },
+  )
+    .then(response => res.status(201).send(response))
+    .catch(() => res.status(500).send('Error deleting bar.'));
 };
