@@ -1,10 +1,12 @@
 /* eslint-disable no-console */
+import bcrypt from 'bcrypt';
 import Owner from '../models/owner/owners.model';
 
-const mockOwner = {
+const mockOwner = async () => ({
   _id: '5c929f783aa09401c2420986',
   email: 'egillh210@gmail.com',
   name: 'Egill Hreinsson',
+  password: await bcrypt.hash('yo', 10),
   bars: [
     {
       menus: [
@@ -61,10 +63,10 @@ const mockOwner = {
     },
   ],
   __v: 2,
-};
+});
 
 const seedDb = async () => {
-  const res = await Owner.create(mockOwner);
+  const res = await Owner.create(await mockOwner());
   return res;
 };
 
