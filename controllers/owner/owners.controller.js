@@ -35,7 +35,6 @@ module.exports.me = async (req, res) => {
     const decoded = jwt.verify(hash, process.env.JWT_SK);
     const { user } = decoded;
     const response = await Owner.findOne({ email: user.email });
-    console.log(response);
     res.status(200).send({ user: response });
   } catch (e) {
     res.status(401).send('Error authorizing.');
