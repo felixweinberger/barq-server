@@ -11,7 +11,7 @@ COPY package.json /app/package.json
 RUN npm install --silent
 
 # Install netcat so wait-for.sh can be used for checking mySQL readiness
-RUN apt-get update && apt-get install -y netcat;
+RUN apt-get update && apt-get install -y netcat
 
 # Copy all other server files
 COPY . .
