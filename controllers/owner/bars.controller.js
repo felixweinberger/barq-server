@@ -1,11 +1,5 @@
 import bcrypt from 'bcrypt';
-import ids from 'short-id';
-
-ids.configure({
-  length: 8,
-  algorithm: 'sha1',
-  salt: Math.random,
-});
+import shortid from 'shortid';
 
 const Owner = require('../../models/owner/owners.model.js');
 
@@ -27,7 +21,7 @@ module.exports.deleteOne = (req, res) => {
 module.exports.generateCode = async (req, res) => {
   const { email } = req.user;
   const { barId } = req.params;
-  const staffCode = ids.generate();
+  const staffCode = shortid.generate();
   const hashedStaffCode = await bcrypt.hash(staffCode, 10);
   Owner.findOne({ email })
     .then((data) => {
