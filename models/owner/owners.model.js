@@ -29,6 +29,7 @@ const Staff = new mongoose.Schema({
 
 const Bar = new mongoose.Schema({
   _id: { type: String, default: ids.generate },
+  staffCode: String,
   name: String,
   currency: String,
   vat: Number,
