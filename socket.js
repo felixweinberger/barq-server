@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import jwt from 'jsonwebtoken';
 import { addToQueue, updateOrderStatus, getOrderStatus } from './db/queue';
 
 // key: bar, value: { key: orderNum, value: socket }
@@ -25,7 +26,12 @@ const ioConfig = (io) => {
         }
 
         // if it's a staff member (token exists), join staff room
-        if (token) socket.join('staff');
+        try {
+          const { barId: decBarId } = jwt.verify(token, process.env.JWT_SK);
+          if (decBarId === barId) socket.join('staff');
+        } catch (err) {
+          socket.disconnect(true);
+        }
 
         // when staff updates status of an order
         socket.on('STATUS_UPDATE', (orderId, newStatus) => {

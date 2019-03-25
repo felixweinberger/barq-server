@@ -1,4 +1,4 @@
-const Owner = require('../../models/owner/owners.model.js');
+const Owner = require('../../models/owner/owners.model');
 
 module.exports.postOne = (req, res) => {
   const { email } = req.user;

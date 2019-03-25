@@ -1,5 +1,4 @@
-// import bcrypt from 'bcrypt';
-// import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 import ids from 'short-id';
 
 ids.configure({
@@ -25,13 +24,14 @@ module.exports.deleteOne = (req, res) => {
     .catch(() => res.status(500).send('Error deleting bar.'));
 };
 
-module.exports.generateCode = (req, res) => {
+module.exports.generateCode = async (req, res) => {
   const { email } = req.user;
   const { barId } = req.params;
   const staffCode = ids.generate();
+  const hashedStaffCode = await bcrypt.hash(staffCode, 10);
   Owner.findOne({ email })
     .then((data) => {
-      data.bars.id(barId).staffCode = staffCode; // eslint-disable-line
+      data.bars.id(barId).staffCode = hashedStaffCode; // eslint-disable-line
       data.save();
     })
     .then(() => res.status(201).send(JSON.stringify(staffCode)))
