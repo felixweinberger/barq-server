@@ -8,7 +8,6 @@ export const createQueue = async (barId) => {
     const {
       name,
       currency,
-      vat,
       open,
     } = await customerCtrl.getMenu(barId);
 
@@ -16,11 +15,9 @@ export const createQueue = async (barId) => {
       barId,
       name,
       currency,
-      vat, // have to adjust this from backend
       open,
       nextOrderId: 1,
       queue: [],
-      history: [],
     };
 
     queues[barId] = newQueue;
@@ -46,7 +43,7 @@ export const getOrder = async (barId, orderId) => {
 
 export const addToQueue = async (barId, order) => {
   const queue = await getQueue(barId);
-  if (queue.queue.concat(queue.history).find(ord => ord.orderId === order.orderId)) return null;
+  if (queue.queue.find(ord => ord.orderId === order.orderId)) return null;
   queue.queue.push(order);
   queue.nextOrderId += 1;
   return queue;
@@ -55,7 +52,6 @@ export const addToQueue = async (barId, order) => {
 export const getOrderStatus = async (barId, orderId) => {
   const queue = await getQueue(barId);
   const foundOrder = queue.queue
-    .concat(queue.history)
     .find(order => order.orderId === Number(orderId));
   if (foundOrder) return foundOrder.status;
   return null;
@@ -66,9 +62,6 @@ export const updateOrderStatus = async (barId, orderId, newStatus) => {
   queue.queue.forEach((el, i) => {
     if (el.orderId === orderId) {
       queue.queue[i].status = newStatus;
-      if (newStatus === 'delivered') {
-        queue.history.push(queue.queue.splice(i, 1)[0]);
-      }
     }
   });
   return queue;
