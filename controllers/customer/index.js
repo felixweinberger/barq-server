@@ -12,6 +12,8 @@ customerCtrl.getMenu = async (req, res) => {
   const { barId } = req.params;
   try {
     const menu = await customerModel.getMenu(barId);
+    const queue = await getQueue(barId);
+    menu.open = queue.open;
     res.status(200);
     res.send(menu);
   } catch (e) {

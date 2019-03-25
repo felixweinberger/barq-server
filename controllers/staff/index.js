@@ -11,12 +11,12 @@ export const fetchQueue = async (req, res) => {
   res.send(queue);
 };
 
-export const setBarStatus = (req, res) => {
+export const setBarStatus = async (req, res) => {
   const { barId } = req.params;
   const { open } = req.body;
 
   // TODO: AUTHORIZE THE STAFF MEMBER FOR THIS BAR
-  const queue = setQueueStatus(barId, open);
+  const queue = await setQueueStatus(barId, open);
 
   // send back the current queue
   res.status(200);
