@@ -1,5 +1,11 @@
-import shortid from 'shortid';
+import ids from 'short-id';
 import mongoose from '../../db/db';
+
+ids.configure({
+  lenght: 4,
+  algorithm: 'sha1',
+  salt: Math.random,
+});
 
 const Item = new mongoose.Schema({
   name: String,
@@ -22,7 +28,7 @@ const Staff = new mongoose.Schema({
 });
 
 const Bar = new mongoose.Schema({
-  _id: { type: String, default: shortid.generate },
+  _id: { type: String, default: ids.generate },
   name: String,
   currency: String,
   vat: Number,
