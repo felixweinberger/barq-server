@@ -8,14 +8,13 @@ customerModel.getMenu = async (barId) => {
     const owner = await Owner.findOne({ bars: { $elemMatch: { _id: barId } } });
 
     // TODO: fix this to not just take the first menu, but the active one
-    const { name, currency, vat } = owner.bars.id(barId);
+    const { name, currency } = owner.bars.id(barId);
     const items = owner.bars.id(barId).menus[0].categories.map(category => category);
 
     const menu = {
       barId,
       name,
       currency,
-      vat: vat || 0.13, // TODO: add property to database for this
       open: true, // TODO: check the queue for this status
       menu: items,
     };

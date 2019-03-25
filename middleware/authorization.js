@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 
 const authorize = (req, res, next) => {
-  // TODO: try catch
   try {
     const authorization = req.headers.authorization.split(' ')[1];
     const { user, barId, staffCode } = jwt.verify(authorization, process.env.JWT_SK);
