@@ -30,9 +30,11 @@ customerCtrl.pay = async (req, res) => {
   const { stripe, order } = req.body;
   try {
     await stripeAccount.charges.create(stripe);
+    const total = order.items.reduce((acc, el) => acc + el.price * el.quantity, 0);
     const confirmation = {
       ...order,
       status: 'paid',
+      total,
       timestamp: new Date().toISOString(),
       orderId: nextOrderId,
     };

@@ -35,6 +35,7 @@ const OrderItem = new mongoose.Schema({
 
 const Order = new mongoose.Schema({
   items: [OrderItem],
+  total: Number,
   status: String,
   timestamp: String,
   orderId: Number,
