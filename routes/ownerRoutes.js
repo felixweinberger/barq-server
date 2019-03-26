@@ -1,6 +1,5 @@
 import ctrl from '../controllers/owner';
 import authorize from '../middleware/authorization';
-// const jwt = require('express-jwt');
 
 const router = require('express').Router();
 

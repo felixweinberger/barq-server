@@ -27,13 +27,27 @@ const Staff = new mongoose.Schema({
   email: String,
 });
 
+const OrderItem = new mongoose.Schema({
+  name: String,
+  price: Number,
+  quantity: Number,
+});
+
+const Order = new mongoose.Schema({
+  items: [OrderItem],
+  status: String,
+  timestamp: String,
+  orderId: Number,
+});
+
 const Bar = new mongoose.Schema({
   _id: { type: String, default: ids.generate },
+  iban: String,
   staffCode: String,
   name: String,
   currency: String,
-  vat: Number,
   activeMenu: Menu,
+  history: [Order],
   menus: [Menu],
   staff: [Staff],
 });

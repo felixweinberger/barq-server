@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
-
 import stripeCharger from 'stripe';
+
 import { getQueue } from '../../db/queue';
 import customerModel from '../../models/customer/customer.model';
+import Owner from '../../models/owner/owners.model';
 
 const customerCtrl = {};
 
@@ -32,8 +33,15 @@ customerCtrl.pay = async (req, res) => {
     const confirmation = {
       ...order,
       status: 'paid',
+      timestamp: new Date().toISOString(),
       orderId: nextOrderId,
     };
+
+    // asynchronously write the order to the history of the bar
+    const owner = await Owner.findOne({ bars: { $elemMatch: { _id: barId } } });
+    owner.bars.id(barId).history.push(confirmation);
+    owner.save();
+
     res.status(200);
     res.send(confirmation);
   } catch (e) {
