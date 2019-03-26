@@ -3,66 +3,102 @@ import bcrypt from 'bcrypt';
 import Owner from '../models/owner/owners.model';
 
 const mockOwner = async () => ({
-  _id: '5c929f783aa09401c2420986',
-  email: 'egillh210@gmail.com',
-  name: 'Egill Hreinsson',
-  password: await bcrypt.hash('yo', 10),
-  bars: [
-    {
-      menus: [
-        {
-          categories: [
-            {
-              items: [
-                {
-                  _id: '5c929fdcc7189a01db2d749f',
-                  name: 'Estrella',
-                  price: 3,
-                },
-                {
-                  _id: '5c929fdcc7189a01db2d749e',
-                  name: 'Corona',
-                  price: 3.5,
-                },
-              ],
-              _id: '5c929fdcc7189a01db2d749d',
-              name: 'Beers',
-            },
-            {
-              items: [
-                {
-                  _id: '5c929fdcc7189a01db2d749c',
-                  name: 'Diet Coke',
-                  price: 2.2,
-                },
-                {
-                  _id: '5c929fdcc7189a01db2d749b',
-                  name: 'Still Water',
-                  price: 2,
-                },
-              ],
-              _id: '5c929fdcc7189a01db2d749a',
-              name: 'Cold drinks',
-            },
-          ],
-          _id: '5c929fdcc7189a01db2d7499',
-          name: 'Standard Menu',
-        },
-      ],
-      staff: [
-        {
-          _id: '5c92a0975e43b001fe955e0c',
-          name: 'Felix Weinberger',
-          email: 'felix@cwbar.com',
-        },
-      ],
-      name: 'Codeworks Bar',
-      currency: 'EUR',
-      vat: 0.21,
-      _id: 'lRMzbkZEn',
-    },
-  ],
-  __v: 2,
+  _id: '5c9a0b57f3ddc20180f0555f',
+  email: 'example@cwbar.com',
+  name: 'Joe Example',
+  password: await bcrypt.hash('secret', 10),
+  bars: [{
+    name: 'Codeworks Bar',
+    currency: 'EUR',
+    _id: 'ebba',
+    history: [{
+      _id: '5c9a16441d198b01e861c1f7',
+      items: [{
+        _id: '5c9a158c1d198b01e861c1f6',
+        name: 'lager',
+        price: 3,
+        quantity: 3,
+      }],
+      status: 'paid',
+      timestamp: '2019-03-26T12:08:36.366Z',
+      orderId: 1,
+    }, {
+      _id: '5c9a17521d198b01e861c1f9',
+      items: [{
+        _id: '5c9a158c1d198b01e861c1f3',
+        name: 'white wine',
+        price: 3,
+        quantity: 4,
+      }],
+      status: 'paid',
+      timestamp: '2019-03-26T12:13:06.579Z',
+      orderId: 2,
+    }, {
+      _id: '5c9a1ae11d198b01e861c1fb',
+      items: [{
+        _id: '5c9a158c1d198b01e861c1f6',
+        name: 'lager',
+        price: 3,
+        quantity: 3,
+      }],
+      status: 'paid',
+      timestamp: '2019-03-26T12:28:17.923Z',
+      orderId: 3,
+    }, {
+      _id: '5c9a2b271d198b01e861c1fd',
+      items: [{
+        _id: '5c9a158c1d198b01e861c1f4',
+        name: 'red wine',
+        price: 4,
+        quantity: 3,
+      }, {
+        _id: '5c9a158c1d198b01e861c1f3',
+        name: 'white wine',
+        price: 3,
+        quantity: 1,
+      }],
+      status: 'paid',
+      timestamp: '2019-03-26T13:37:43.380Z',
+      orderId: 4,
+    }],
+    menus: [{
+      _id: '5c9a158c1d198b01e861c1ef',
+      name: 'Standard menu',
+      categories: [{
+        _id: '5c9a158c1d198b01e861c1f5',
+        name: 'beers',
+        items: [{
+          _id: '5c9a158c1d198b01e861c1f6',
+          name: 'lager',
+          price: 3,
+        }],
+      }, {
+        _id: '5c9a158c1d198b01e861c1f2',
+        name: 'wines',
+        items: [{
+          _id: '5c9a158c1d198b01e861c1f4',
+          name: 'red wine',
+          price: 4,
+        }, {
+          _id: '5c9a158c1d198b01e861c1f3',
+          name: 'white wine',
+          price: 3,
+        }],
+      }, {
+        _id: '5c9a158c1d198b01e861c1f0',
+        name: 'cocktails',
+        items: [{
+          _id: '5c9a158c1d198b01e861c1f1',
+          name: 'cosmo',
+          price: 6,
+        }],
+      }],
+    }],
+    staff: [],
+    iban: 'ABC1234DE5678FG',
+    staffCode: '',
+  }],
+  __v: 5,
 });
 
 const seedDb = async () => {
