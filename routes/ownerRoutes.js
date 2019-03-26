@@ -11,6 +11,7 @@ router
   .post('/bars', authorize, ctrl.bars.postOne)
   .delete('/bars/:barId', authorize, ctrl.bars.deleteOne)
   .get('/bars/:barId/code', authorize, ctrl.bars.generateCode)
+  .post('/bars/:barId/iban', authorize, ctrl.bars.setIban)
   .post('/bars/:barId/menus', authorize, ctrl.menu.postOne)
   .delete('/bars/:barId/menus/:menuId', authorize, ctrl.menu.deleteOne)
   .put('/bars/:barId/menus/:menuId', authorize, ctrl.menu.makeActive)

@@ -31,3 +31,16 @@ module.exports.generateCode = async (req, res) => {
     .then(() => res.status(201).send(JSON.stringify(staffCode)))
     .catch(() => res.status(500).send('Error generating staff code.'));
 };
+
+module.exports.setIban = async (req, res) => {
+  const { email } = req.user;
+  const { barId } = req.params;
+  const { iban } = req.body;
+  Owner.findOne({ email })
+    .then((data) => {
+      data.bars.id(barId).iban = iban; // eslint-disable-line
+      data.save();
+    })
+    .then(() => res.status(201).send(JSON.stringify(iban)))
+    .catch(() => res.status(500).send('Error setting IBAN.'));
+};
