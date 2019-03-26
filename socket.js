@@ -17,7 +17,7 @@ const ioConfig = (io) => {
 
       io.of(bar).on('connect', async (socket) => {
         const { orderNumber, token } = socket.handshake.query;
-
+        console.log(token);
         // get orderNumber and/or token from socket connection
         if (orderNumber) {
           orderBarSockets[bar][orderNumber] = socket;
@@ -26,11 +26,14 @@ const ioConfig = (io) => {
         }
 
         // if it's a staff member (token exists), join staff room
-        try {
-          const { barId: decBarId } = jwt.verify(token, process.env.JWT_SK);
-          if (decBarId === barId) socket.join('staff');
-        } catch (err) {
-          socket.disconnect(true);
+        if (token) {
+          try {
+            const { barId: decBarId } = jwt.verify(token, process.env.JWT_SK);
+            if (decBarId === barId) socket.join('staff');
+          } catch (err) {
+            console.log(err);
+            socket.disconnect(true);
+          }
         }
 
         // when staff updates status of an order
@@ -51,7 +54,6 @@ const ioConfig = (io) => {
           const isNewOrder = await addToQueue(barId, newOrder);
           // need to check if orderNumber already exists, if yes do not create new order
           const orderStatus = await getOrderStatus(barId, orderNumber);
-          console.log(orderStatus);
           // emit new order to all bar staff
           if (orderStatus) socket.emit('STATUS_UPDATE', orderStatus);
           if (isNewOrder) io.of(bar).to('staff').emit('NEW_ORDER', newOrder);
