@@ -16,6 +16,6 @@ router
   .post('/bars/:barId/iban', authorize, ctrl.setBarIban)
   .post('/bars/:barId/menus', authorize, ctrl.createMenu)
   .delete('/bars/:barId/menus/:menuId', authorize, ctrl.deleteMenu)
-  .put('/bars/:barId/menus/:menuId', authorize, ctrl.setActiveMenu);
+  .put('/bars/:barId/menus/:menuId', authorize, ctrl.setActiveMenuForBar);
 
 export default router;

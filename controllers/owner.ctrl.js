@@ -11,9 +11,8 @@ import {
   setBarIban,
   createMenuForBar,
   deleteMenuForBar,
+  setActiveMenuForBar,
 } from '../models/owners.model';
-
-import Owner from '../schemas/owners.schema';
 
 // Owner registration & login
 module.exports.registerOwner = async (req, res) => {
@@ -133,16 +132,13 @@ module.exports.deleteMenu = async (req, res) => {
   }
 };
 
-module.exports.setActiveMenu = (req, res) => {
-  const { email } = req.user;
-  const { barId, menuId } = req.params;
-  Owner.findOne({ email })
-    .then((data) => {
-      const menu = data.bars.id(barId).menus.id(menuId);
-      data.bars.id(barId).activeMenu = menu; // eslint-disable-line
-      data.save();
-      return data;
-    })
-    .then(response => res.status(201).send(response))
-    .catch(error => res.status(500).send('Error creating bar: ', error));
+module.exports.setActiveMenuForBar = async (req, res) => {
+  try {
+    const { email } = req.user;
+    const { barId, menuId } = req.params;
+    const result = await setActiveMenuForBar(email, barId, menuId);
+    res.status(201).send(result);
+  } catch (e) {
+    res.status(500).send('Error changing active menu.');
+  }
 };

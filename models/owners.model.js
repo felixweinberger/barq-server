@@ -67,3 +67,11 @@ export const deleteMenuForBar = async (email, barId, menuId) => {
   owner.save();
   return owner;
 };
+
+export const setActiveMenuForBar = async (email, barId, menuId) => {
+  const owner = await Owner.findOne({ email });
+  const menu = owner.bars.id(barId).menus.id(menuId);
+  owner.bars.id(barId).activeMenu = menu; // eslint-disable-line
+  owner.save();
+  return owner;
+};
