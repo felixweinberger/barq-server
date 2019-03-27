@@ -1,8 +1,8 @@
 import express from 'express';
 
-import ownerRoutes from './ownerRoutes';
-import staffRoutes from './staffRoutes';
-import customerRoutes from './customerRoutes';
+import ownerRoutes from './owner.routes';
+import staffRoutes from './staff.routes';
+import customerRoutes from './customer.routes';
 
 const router = express.Router();
 
