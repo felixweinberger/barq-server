@@ -39,3 +39,13 @@ export const setBarIban = async (email, barId, iban) => {
   owner.bars.id(barId).iban = iban;
   return iban;
 };
+
+export const createMenuForBar = async (email, barId, menu) => {
+  const owner = await Owner.findOne({ email });
+  owner.bars.id(barId).menus.push(menu);
+  if (owner.bars.id(barId).menus.length === 1) {
+    owner.bars.id(barId).activeMenu = menu; // eslint-disable-line
+  }
+  owner.save();
+  return owner;
+};

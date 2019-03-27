@@ -9,6 +9,7 @@ import {
   deleteBarForOwner,
   generateStaffCodeForBar,
   setBarIban,
+  createMenuForBar,
 } from '../models/owners.model';
 
 import Owner from '../schemas/owners.schema';
@@ -108,21 +109,16 @@ module.exports.setBarIban = async (req, res) => {
 };
 
 // Menu creation and modification
-module.exports.createMenu = (req, res) => {
-  const { email } = req.user;
-  const { barId } = req.params;
-  const newMenu = req.body;
-  Owner.findOne({ email })
-    .then((data) => {
-      data.bars.id(barId).menus.push(newMenu);
-      if (data.bars.id(barId).menus.length === 1) {
-        data.bars.id(barId).activeMenu = newMenu; // eslint-disable-line
-      }
-      data.save();
-      return data;
-    })
-    .then(response => res.status(201).send(response))
-    .catch(error => res.status(500).send('Error creating bar: ', error));
+module.exports.createMenu = async (req, res) => {
+  try {
+    const { email } = req.user;
+    const { barId } = req.params;
+    const newMenu = req.body;
+    const result = await createMenuForBar(email, barId, newMenu);
+    res.status(201).send(JSON.stringify(result));
+  } catch (e) {
+    res.status(500).send('Error creating menu.');
+  }
 };
 
 module.exports.deleteMenu = (req, res) => {
