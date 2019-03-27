@@ -3,7 +3,7 @@ import stripeCharger from 'stripe';
 
 import { getQueue } from '../../db/queue';
 import customerModel from '../../models/customer/customer.model';
-import Owner from '../../models/owner/owners.model';
+import Owner from '../../models/owners.model';
 
 const customerCtrl = {};
 

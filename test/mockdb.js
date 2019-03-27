@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import bcrypt from 'bcrypt';
-import Owner from '../models/owner/owners.model';
+import Owner from '../models/owners.model';
 
 const mockOwner = async () => ({
   _id: '5c9a0b57f3ddc20180f0555f',

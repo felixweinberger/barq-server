@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import shortid from 'shortid';
 
-const Owner = require('../../models/owner/owners.model.js');
+const Owner = require('../../models/owners.model.js');
 
 module.exports.postOne = (req, res) => {
   const { email } = req.user;

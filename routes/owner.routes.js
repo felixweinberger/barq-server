@@ -1,19 +1,19 @@
-import ctrl from '../controllers/owner';
+import ctrl from '../controllers/owner.ctrl';
 import authorize from '../middleware/authorization';
 
 const router = require('express').Router();
 
 router
-  .post('/', ctrl.owner.register)
-  .get('/', ctrl.owner.login)
-  .get('/me', ctrl.owner.me)
-  .delete('/', authorize, ctrl.owner.deleteOne)
-  .post('/bars', authorize, ctrl.bars.postOne)
-  .delete('/bars/:barId', authorize, ctrl.bars.deleteOne)
-  .get('/bars/:barId/code', authorize, ctrl.bars.generateCode)
-  .post('/bars/:barId/iban', authorize, ctrl.bars.setIban)
-  .post('/bars/:barId/menus', authorize, ctrl.menu.postOne)
-  .delete('/bars/:barId/menus/:menuId', authorize, ctrl.menu.deleteOne)
-  .put('/bars/:barId/menus/:menuId', authorize, ctrl.menu.makeActive);
+  .post('/', ctrl.registerOwner)
+  .get('/', ctrl.loginOwner)
+  .get('/me', ctrl.authorizeOwner)
+  .delete('/', authorize, ctrl.deleteOwner)
+  .post('/bars', authorize, ctrl.createBar)
+  .delete('/bars/:barId', authorize, ctrl.deleteBar)
+  .get('/bars/:barId/code', authorize, ctrl.generateStaffCode)
+  .post('/bars/:barId/iban', authorize, ctrl.setBarIban)
+  .post('/bars/:barId/menus', authorize, ctrl.createMenu)
+  .delete('/bars/:barId/menus/:menuId', authorize, ctrl.deleteMenu)
+  .put('/bars/:barId/menus/:menuId', authorize, ctrl.setActiveMenu);
 
 export default router;

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const Owner = require('../owner/owners.model.js');
+const Owner = require('../owners.model.js');
 
 const customerModel = {};
 

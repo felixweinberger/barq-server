@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-const Owner = require('../../models/owner/owners.model.js');
+const Owner = require('../../models/owners.model.js');
 
 module.exports.register = async (req, res) => {
   try {

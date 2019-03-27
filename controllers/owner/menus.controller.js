@@ -1,4 +1,4 @@
-import Owner from '../../models/owner/owners.model';
+import Owner from '../../models/owners.model';
 
 module.exports.postOne = (req, res) => {
   const { email } = req.user;
