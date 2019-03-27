@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import Owner from '../models/owners.model';
+import Owner from '../schemas/owners.schema';
 import { getQueue, setQueueStatus } from '../db/queue';
 
 

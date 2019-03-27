@@ -3,7 +3,7 @@ import stripeCharger from 'stripe';
 
 import { getQueue } from '../db/queue';
 import customerModel from '../models/customer/customer.model';
-import Owner from '../models/owners.model';
+import Owner from '../schemas/owners.schema';
 
 const stripeAccount = stripeCharger(process.env.STRIPE_SK);
 

@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import shortid from 'shortid';
 import jwt from 'jsonwebtoken';
 
-import Owner from '../models/owners.model';
+import Owner from '../schemas/owners.schema';
 
 // Owner registration & login
 module.exports.registerOwner = async (req, res) => {
