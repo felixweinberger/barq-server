@@ -1,7 +1,10 @@
 import bcrypt from 'bcrypt';
 import shortid from 'shortid';
+import mongoose from 'mongoose';
 
 import Owner from '../schemas/owners.schema';
+
+const { ObjectId } = mongoose.Types;
 
 export const createOwner = async (email, name, password) => {
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -42,9 +45,24 @@ export const setBarIban = async (email, barId, iban) => {
 
 export const createMenuForBar = async (email, barId, menu) => {
   const owner = await Owner.findOne({ email });
-  owner.bars.id(barId).menus.push(menu);
+  const newMenu = {
+    _id: ObjectId(),
+    ...menu,
+  };
+  owner.bars.id(barId).menus.push(newMenu);
   if (owner.bars.id(barId).menus.length === 1) {
-    owner.bars.id(barId).activeMenu = menu; // eslint-disable-line
+    owner.bars.id(barId).activeMenu = newMenu; // eslint-disable-line
+  }
+  owner.save();
+  return owner;
+};
+
+export const deleteMenuForBar = async (email, barId, menuId) => {
+  const owner = await Owner.findOne({ email });
+  const index = owner.bars.id(barId).menus.findIndex(el => el._id.toString() === menuId); // eslint-disable-line
+  owner.bars.id(barId).menus.splice(index, 1);
+  if (owner.bars.id(barId).activeMenu._id.toString() === menuId) { // eslint-disable-line
+    owner.bars.id(barId).activeMenu = null;
   }
   owner.save();
   return owner;

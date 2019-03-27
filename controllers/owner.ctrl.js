@@ -10,6 +10,7 @@ import {
   generateStaffCodeForBar,
   setBarIban,
   createMenuForBar,
+  deleteMenuForBar,
 } from '../models/owners.model';
 
 import Owner from '../schemas/owners.schema';
@@ -121,18 +122,15 @@ module.exports.createMenu = async (req, res) => {
   }
 };
 
-module.exports.deleteMenu = (req, res) => {
-  const { email } = req.user;
-  const { barId, menuId } = req.params;
-  Owner.findOne({ email })
-    .then((data) => {
-      const index = data.bars.id(barId).menus.findIndex(el => el._id.toString() === menuId); //eslint-disable-line
-      data.bars.id(barId).menus.splice(index, 1);
-      data.save();
-      return data;
-    })
-    .then(response => res.status(204).send(response))
-    .catch(error => res.status(500).send('Error posting bar: ', error));
+module.exports.deleteMenu = async (req, res) => {
+  try {
+    const { email } = req.user;
+    const { barId, menuId } = req.params;
+    const result = await deleteMenuForBar(email, barId, menuId);
+    res.status(204).send(result);
+  } catch (e) {
+    res.status(500).send('Error deleting menu.');
+  }
 };
 
 module.exports.setActiveMenu = (req, res) => {
