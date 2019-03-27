@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import bcrypt from 'bcrypt';
+
 import Owner from '../schemas/owners.schema';
 
 export const getActiveMenu = async (barId) => {
@@ -35,4 +37,11 @@ export const addOrderToHistory = async (barId, confirmation) => {
     console.log('Error in addOrderToHistory.');
     return { Error: 'Error adding order to history.' };
   }
+};
+
+export const checkStaffCodeByBar = async (barId, staffCode) => {
+  const owner = await Owner.findOne({ bars: { $elemMatch: { _id: barId } } });
+  const bar = owner.bars.filter(el => barId === el._id)[0]; // eslint-disable-line
+  const isCorrectCode = await bcrypt.compare(staffCode, bar.staffCode);
+  return isCorrectCode;
 };

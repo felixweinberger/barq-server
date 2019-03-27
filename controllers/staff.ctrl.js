@@ -1,9 +1,7 @@
-import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import Owner from '../schemas/owners.schema';
+import { checkStaffCodeByBar } from '../models/bars.model';
 import { getQueue, setQueueStatus } from '../models/queues.model';
-
 
 export const fetchQueue = async (req, res) => {
   try {
@@ -33,9 +31,7 @@ export const checkStaffCode = async (req, res) => {
     const hash = req.headers.authorization.split(' ')[1];
     const decoded = Buffer.from(hash, 'base64').toString();
     const [barId, staffCode] = decoded.split(':');
-    const owner = await Owner.findOne({ bars: { $elemMatch: { _id: barId } } });
-    const bar = owner.bars.filter(el => barId === el._id)[0]; // eslint-disable-line
-    const isCorrectCode = await bcrypt.compare(staffCode, bar.staffCode);
+    const isCorrectCode = await checkStaffCodeByBar(barId, staffCode);
     if (!isCorrectCode) throw new Error();
     const token = jwt.sign({ barId, staffCode }, process.env.JWT_SK);
     res.status(200).send({ token });
