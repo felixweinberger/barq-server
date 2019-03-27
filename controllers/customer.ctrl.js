@@ -2,8 +2,7 @@
 import stripeCharger from 'stripe';
 
 import { getQueue } from '../db/queue';
-import { getActiveMenu } from '../models/bars.model';
-import Owner from '../schemas/owners.schema';
+import { getActiveMenu, addOrderToHistory } from '../models/bars.model';
 
 const stripeAccount = stripeCharger(process.env.STRIPE_SK);
 
@@ -36,12 +35,7 @@ export const pay = async (req, res) => {
       timestamp: new Date().toISOString(),
       orderId: nextOrderId,
     };
-
-    // asynchronously write the order to the history of the bar
-    const owner = await Owner.findOne({ bars: { $elemMatch: { _id: barId } } });
-    owner.bars.id(barId).history.push(confirmation);
-    owner.save();
-
+    addOrderToHistory(barId, confirmation);
     res.status(200);
     res.send(confirmation);
   } catch (e) {
