@@ -22,7 +22,8 @@ export const createBarForOwner = async (email, bar) => {
     { $push: { bars: bar } },
     { new: true },
   );
-  return Owner.findOne({ email });
+  const owner = await Owner.findOne({ email });
+  return owner;
 };
 
 export const deleteBarForOwner = async (email, bar) => {
@@ -31,7 +32,8 @@ export const deleteBarForOwner = async (email, bar) => {
     { $pull: { bars: bar } },
     { new: true },
   );
-  return Owner.findOne({ email });
+  const owner = await Owner.findOne({ email });
+  return owner;
 };
 
 export const generateStaffCodeForBar = async (email, barId) => {
