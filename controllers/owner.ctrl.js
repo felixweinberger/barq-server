@@ -77,9 +77,9 @@ export const createBar = async (req, res) => {
 export const deleteBar = async (req, res) => {
   try {
     const { email } = req.user;
-    const newBar = req.body;
-    const result = await deleteBarForOwner(email, newBar);
-    res.status(204).send(result);
+    const { barId } = req.params;
+    const result = await deleteBarForOwner(email, barId);
+    res.status(201).send(result);
   } catch (e) {
     res.status(500).send('Error deleting bar.');
   }

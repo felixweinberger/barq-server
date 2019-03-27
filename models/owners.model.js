@@ -26,13 +26,11 @@ export const createBarForOwner = async (email, bar) => {
   return owner;
 };
 
-export const deleteBarForOwner = async (email, bar) => {
-  await Owner.findOneAndUpdate(
-    { email },
-    { $pull: { bars: bar } },
-    { new: true },
-  );
+export const deleteBarForOwner = async (email, barId) => {
   const owner = await Owner.findOne({ email });
+  const index = owner.bars.findIndex(el => el._id === barId); // eslint-disable-line
+  owner.bars.splice(index, 1);
+  owner.save();
   return owner;
 };
 
