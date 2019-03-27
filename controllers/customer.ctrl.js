@@ -2,7 +2,7 @@
 import stripeCharger from 'stripe';
 
 import { getQueue } from '../db/queue';
-import customerModel from '../models/customer/customer.model';
+import { getActiveMenu } from '../models/bars.model';
 import Owner from '../schemas/owners.schema';
 
 const stripeAccount = stripeCharger(process.env.STRIPE_SK);
@@ -10,7 +10,7 @@ const stripeAccount = stripeCharger(process.env.STRIPE_SK);
 export const getMenu = async (req, res) => {
   const { barId } = req.params;
   try {
-    const menu = await customerModel.getMenu(barId);
+    const menu = await getActiveMenu(barId);
     const queue = await getQueue(barId);
     menu.open = queue.open;
     res.status(200);
