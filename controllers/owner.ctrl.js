@@ -62,22 +62,22 @@ module.exports.deleteOwner = async (req, res) => {
 };
 
 // Bar creation and modification
-module.exports.createBar = (req, res) => {
+module.exports.createBar = async (req, res) => {
   try {
     const { email } = req.user;
     const newBar = req.body;
-    const result = createBarForOwner(email, newBar);
+    const result = await createBarForOwner(email, newBar);
     res.status(201).send(result);
   } catch (e) {
     res.status(500).send('Error creating new bar.');
   }
 };
 
-module.exports.deleteBar = (req, res) => {
+module.exports.deleteBar = async (req, res) => {
   try {
     const { email } = req.user;
     const newBar = req.body;
-    const result = deleteBarForOwner(email, newBar);
+    const result = await deleteBarForOwner(email, newBar);
     res.status(201).send(result);
   } catch (e) {
     res.status(500).send('Error deleting bar.');

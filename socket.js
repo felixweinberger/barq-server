@@ -17,7 +17,6 @@ const ioConfig = (io) => {
 
       io.of(bar).on('connect', async (socket) => {
         const { orderNumber, token } = socket.handshake.query;
-        console.log(token);
         // get orderNumber and/or token from socket connection
         if (orderNumber) {
           orderBarSockets[bar][orderNumber] = socket;
