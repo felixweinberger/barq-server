@@ -9,14 +9,11 @@ export const getActiveMenu = async (barId) => {
     const { name, currency } = owner.bars.id(barId);
     const items = owner.bars.id(barId).activeMenu.categories.map(category => category);
 
-    // const queue = await getQueue(barId);
-    // const { open } = queue;
-
     const menu = {
       barId,
       name,
       currency,
-      open: true, // TODO: fix this to check open status
+      open: true,
       menu: items,
     };
 
