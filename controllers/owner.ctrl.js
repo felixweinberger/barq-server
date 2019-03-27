@@ -2,17 +2,22 @@ import bcrypt from 'bcrypt';
 import shortid from 'shortid';
 import jwt from 'jsonwebtoken';
 
+import {
+  createOwner,
+  findOwnerByEmail,
+  deleteOwnerByEmail,
+} from '../models/owners.model';
+
 import Owner from '../schemas/owners.schema';
 
 // Owner registration & login
 module.exports.registerOwner = async (req, res) => {
   try {
     const { email, name, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const response = await Owner.create({ email, name, password: hashedPassword });
-    res.status(201).send(response);
+    const result = await createOwner(email, name, password);
+    res.status(201).send(result);
   } catch (e) {
-    res.status(401).send('Error creating new owner');
+    res.status(500).send('Error creating new owner');
   }
 };
 
@@ -21,7 +26,7 @@ module.exports.loginOwner = async (req, res) => {
     const hash = req.headers.authorization.split(' ')[1];
     const decoded = Buffer.from(hash, 'base64').toString();
     const [email, password] = decoded.split(':');
-    const user = await Owner.findOne({ email });
+    const user = await findOwnerByEmail(email);
     const isCorrectPassword = await bcrypt.compare(password, user.password);
     if (!isCorrectPassword) throw new Error();
     const token = jwt.sign({ user }, process.env.JWT_SK);
@@ -36,18 +41,21 @@ module.exports.authorizeOwner = async (req, res) => {
     const hash = req.headers.authorization.split(' ')[1];
     const decoded = jwt.verify(hash, process.env.JWT_SK);
     const { user } = decoded;
-    const response = await Owner.findOne({ email: user.email });
+    const response = await findOwnerByEmail(user.email);
     res.status(200).send({ user: response });
   } catch (e) {
     res.status(401).send('Error authorizing.');
   }
 };
 
-module.exports.deleteOwner = (req, res) => {
-  const { email } = req.user;
-  Owner.findOneAndDelete({ email })
-    .then(() => res.status(204).send())
-    .catch(error => res.status(500).send('Error deleting owner: ', error));
+module.exports.deleteOwner = async (req, res) => {
+  try {
+    const { email } = req.user;
+    const result = await deleteOwnerByEmail(email);
+    res.status(204).send(result);
+  } catch (e) {
+    res.status(500).send('Error deleting owner.');
+  }
 };
 
 // Bar creation and modification
