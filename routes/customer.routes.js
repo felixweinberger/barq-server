@@ -1,11 +1,11 @@
 import express from 'express';
 
-import { getMenu, pay } from '../controllers/customer.ctrl';
+import * as ctrl from '../controllers/customer.ctrl';
 
 const router = express.Router();
 
 router
-  .get('/:barId/menu', getMenu)
-  .post('/:barId/pay', pay);
+  .get('/:barId/menu', ctrl.getMenu)
+  .post('/:barId/pay', ctrl.pay);
 
 export default router;

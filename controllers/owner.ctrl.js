@@ -15,7 +15,7 @@ import {
 } from '../models/owners.model';
 
 // Owner registration & login
-module.exports.registerOwner = async (req, res) => {
+export const registerOwner = async (req, res) => {
   try {
     const { email, name, password } = req.body;
     const result = await createOwner(email, name, password);
@@ -25,7 +25,7 @@ module.exports.registerOwner = async (req, res) => {
   }
 };
 
-module.exports.loginOwner = async (req, res) => {
+export const loginOwner = async (req, res) => {
   try {
     const hash = req.headers.authorization.split(' ')[1];
     const decoded = Buffer.from(hash, 'base64').toString();
@@ -40,7 +40,7 @@ module.exports.loginOwner = async (req, res) => {
   }
 };
 
-module.exports.authorizeOwner = async (req, res) => {
+export const authorizeOwner = async (req, res) => {
   try {
     const hash = req.headers.authorization.split(' ')[1];
     const decoded = jwt.verify(hash, process.env.JWT_SK);
@@ -52,7 +52,7 @@ module.exports.authorizeOwner = async (req, res) => {
   }
 };
 
-module.exports.deleteOwner = async (req, res) => {
+export const deleteOwner = async (req, res) => {
   try {
     const { email } = req.user;
     const result = await deleteOwnerByEmail(email);
@@ -63,7 +63,7 @@ module.exports.deleteOwner = async (req, res) => {
 };
 
 // Bar creation and modification
-module.exports.createBar = async (req, res) => {
+export const createBar = async (req, res) => {
   try {
     const { email } = req.user;
     const newBar = req.body;
@@ -74,7 +74,7 @@ module.exports.createBar = async (req, res) => {
   }
 };
 
-module.exports.deleteBar = async (req, res) => {
+export const deleteBar = async (req, res) => {
   try {
     const { email } = req.user;
     const newBar = req.body;
@@ -85,7 +85,7 @@ module.exports.deleteBar = async (req, res) => {
   }
 };
 
-module.exports.generateStaffCode = async (req, res) => {
+export const generateStaffCode = async (req, res) => {
   try {
     const { email } = req.user;
     const { barId } = req.params;
@@ -96,7 +96,7 @@ module.exports.generateStaffCode = async (req, res) => {
   }
 };
 
-module.exports.setBarIban = async (req, res) => {
+export const setIban = async (req, res) => {
   try {
     const { email } = req.user;
     const { barId } = req.params;
@@ -109,7 +109,7 @@ module.exports.setBarIban = async (req, res) => {
 };
 
 // Menu creation and modification
-module.exports.createMenu = async (req, res) => {
+export const createMenu = async (req, res) => {
   try {
     const { email } = req.user;
     const { barId } = req.params;
@@ -121,7 +121,7 @@ module.exports.createMenu = async (req, res) => {
   }
 };
 
-module.exports.deleteMenu = async (req, res) => {
+export const deleteMenu = async (req, res) => {
   try {
     const { email } = req.user;
     const { barId, menuId } = req.params;
@@ -132,7 +132,7 @@ module.exports.deleteMenu = async (req, res) => {
   }
 };
 
-module.exports.setActiveMenuForBar = async (req, res) => {
+export const setActiveMenu = async (req, res) => {
   try {
     const { email } = req.user;
     const { barId, menuId } = req.params;

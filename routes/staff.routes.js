@@ -1,13 +1,13 @@
 import express from 'express';
 
 import authorize from '../middleware/authorization';
-import { fetchQueue, setBarStatus, checkStaffCode } from '../controllers/staff.ctrl';
+import * as ctrl from '../controllers/staff.ctrl';
 
 const router = express.Router();
 
 router
-  .get('/:barId/queue', authorize, fetchQueue)
-  .post('/:barId/open', authorize, setBarStatus)
-  .get('/:barId/code', checkStaffCode);
+  .get('/:barId/queue', authorize, ctrl.fetchQueue)
+  .post('/:barId/open', authorize, ctrl.setBarStatus)
+  .get('/:barId/code', ctrl.checkStaffCode);
 
 export default router;

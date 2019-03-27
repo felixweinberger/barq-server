@@ -1,7 +1,7 @@
 import express from 'express';
 
 import authorize from '../middleware/authorization';
-import ctrl from '../controllers/owner.ctrl';
+import * as ctrl from '../controllers/owner.ctrl';
 
 const router = express.Router();
 
@@ -13,9 +13,9 @@ router
   .post('/bars', authorize, ctrl.createBar)
   .delete('/bars/:barId', authorize, ctrl.deleteBar)
   .get('/bars/:barId/code', authorize, ctrl.generateStaffCode)
-  .post('/bars/:barId/iban', authorize, ctrl.setBarIban)
+  .post('/bars/:barId/iban', authorize, ctrl.setIban)
   .post('/bars/:barId/menus', authorize, ctrl.createMenu)
   .delete('/bars/:barId/menus/:menuId', authorize, ctrl.deleteMenu)
-  .put('/bars/:barId/menus/:menuId', authorize, ctrl.setActiveMenuForBar);
+  .put('/bars/:barId/menus/:menuId', authorize, ctrl.setActiveMenu);
 
 export default router;

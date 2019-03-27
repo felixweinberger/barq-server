@@ -181,3 +181,5 @@ const seedDb = async () => {
   console.log(res);
   process.exit(0);
 })();
+
+export default seedDb;
