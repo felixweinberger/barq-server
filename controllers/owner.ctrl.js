@@ -21,7 +21,7 @@ export const registerOwner = async (req, res) => {
     const result = await createOwner(email, name, password);
     res.status(201).send(result);
   } catch (e) {
-    res.status(500).send('Error creating new owner');
+    res.status(401).send('Error creating new owner');
   }
 };
 
