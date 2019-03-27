@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import jwt from 'jsonwebtoken';
-import { addToQueue, updateOrderStatus, getOrderStatus } from './db/queue';
+import { addToQueue, updateOrderStatus, getOrderStatus } from './models/queues.model';
 
 // key: bar, value: { key: orderNum, value: socket }
 const orderBarSockets = {};

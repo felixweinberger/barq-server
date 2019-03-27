@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import stripeCharger from 'stripe';
 
-import { getQueue } from '../db/queue';
+import { getQueue } from '../models/queues.model';
 import { getActiveMenu, addOrderToHistory } from '../models/bars.model';
 
 const stripeAccount = stripeCharger(process.env.STRIPE_SK);

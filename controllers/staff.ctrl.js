@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import Owner from '../schemas/owners.schema';
-import { getQueue, setQueueStatus } from '../db/queue';
+import { getQueue, setQueueStatus } from '../models/queues.model';
 
 
 export const fetchQueue = async (req, res) => {
