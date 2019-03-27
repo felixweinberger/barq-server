@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import shortid from 'shortid';
 import jwt from 'jsonwebtoken';
 
 import {
@@ -8,6 +7,7 @@ import {
   deleteOwnerByEmail,
   createBarForOwner,
   deleteBarForOwner,
+  generateStaffCodeForBar,
 } from '../models/owners.model';
 
 import Owner from '../schemas/owners.schema';
@@ -84,17 +84,14 @@ module.exports.deleteBar = (req, res) => {
 };
 
 module.exports.generateStaffCode = async (req, res) => {
-  const { email } = req.user;
-  const { barId } = req.params;
-  const staffCode = shortid.generate();
-  const hashedStaffCode = await bcrypt.hash(staffCode, 10);
-  Owner.findOne({ email })
-    .then((data) => {
-      data.bars.id(barId).staffCode = hashedStaffCode; // eslint-disable-line
-      data.save();
-    })
-    .then(() => res.status(201).send(JSON.stringify(staffCode)))
-    .catch(() => res.status(500).send('Error generating staff code.'));
+  try {
+    const { email } = req.user;
+    const { barId } = req.params;
+    const staffCode = await generateStaffCodeForBar(email, barId);
+    res.status(201).send(JSON.stringify(staffCode));
+  } catch (e) {
+    res.status(500).send('Error generating staff code.');
+  }
 };
 
 module.exports.setBarIban = async (req, res) => {

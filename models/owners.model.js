@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import shortid from 'shortid';
 
 import Owner from '../schemas/owners.schema';
 
@@ -24,4 +25,11 @@ export const deleteBarForOwner = async (email, bar) => Owner.findOneAndUpdate(
   { new: true },
 );
 
-export default createOwner;
+export const generateStaffCodeForBar = async (email, barId) => {
+  const staffCode = shortid.generate();
+  const hashedStaffCode = await bcrypt.hash(staffCode, 10);
+  const owner = await Owner.findOne({ email });
+  owner.bars.id(barId).staffCode = hashedStaffCode; // eslint-disable-line
+  owner.save();
+  return staffCode;
+};
