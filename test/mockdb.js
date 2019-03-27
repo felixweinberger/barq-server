@@ -98,6 +98,39 @@ const mockOwner = async () => ({
         }],
       }],
     }],
+    activeMenu: {
+      _id: '5c9a158c1d198b01e861c1ef',
+      name: 'Standard menu',
+      categories: [{
+        _id: '5c9a158c1d198b01e861c1f5',
+        name: 'beers',
+        items: [{
+          _id: '5c9a158c1d198b01e861c1f6',
+          name: 'lager',
+          price: 3,
+        }],
+      }, {
+        _id: '5c9a158c1d198b01e861c1f2',
+        name: 'wines',
+        items: [{
+          _id: '5c9a158c1d198b01e861c1f4',
+          name: 'red wine',
+          price: 4,
+        }, {
+          _id: '5c9a158c1d198b01e861c1f3',
+          name: 'white wine',
+          price: 3,
+        }],
+      }, {
+        _id: '5c9a158c1d198b01e861c1f0',
+        name: 'cocktails',
+        items: [{
+          _id: '5c9a158c1d198b01e861c1f1',
+          name: 'cosmo',
+          price: 6,
+        }],
+      }],
+    },
     staff: [],
     iban: 'ABC1234DE5678FG',
     staffCode: '',

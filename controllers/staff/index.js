@@ -6,18 +6,26 @@ import { getQueue, setQueueStatus } from '../../db/queue';
 
 
 export const fetchQueue = async (req, res) => {
-  const { barId } = req.params;
-  const queue = await getQueue(barId);
-  res.status(200);
-  res.send(queue);
+  try {
+    const { barId } = req.params;
+    const queue = await getQueue(barId);
+    res.status(200);
+    res.send(queue);
+  } catch (e) {
+    res.status(401).send('Error fetching the queue.');
+  }
 };
 
 export const setBarStatus = async (req, res) => {
-  const { barId } = req.params;
-  const { open } = req.body;
-  const queue = await setQueueStatus(barId, open);
-  res.status(200);
-  res.send(queue);
+  try {
+    const { barId } = req.params;
+    const { open } = req.body;
+    const queue = await setQueueStatus(barId, open);
+    res.status(200);
+    res.send(queue);
+  } catch (e) {
+    res.status(401).send('Error changing the bar status.');
+  }
 };
 
 export const checkCode = async (req, res) => {

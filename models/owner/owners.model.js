@@ -2,7 +2,7 @@ import ids from 'short-id';
 import mongoose from '../../db/db';
 
 ids.configure({
-  length: 4,
+  length: 6,
   algorithm: 'sha1',
   salt: Math.random,
 });

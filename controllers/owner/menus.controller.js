@@ -1,4 +1,4 @@
-const Owner = require('../../models/owner/owners.model.js');
+import Owner from '../../models/owner/owners.model';
 
 module.exports.postOne = (req, res) => {
   const { email } = req.user;
@@ -7,6 +7,9 @@ module.exports.postOne = (req, res) => {
   Owner.findOne({ email })
     .then((data) => {
       data.bars.id(barId).menus.push(newMenu);
+      if (data.bars.id(barId).menus.length === 1) {
+        data.bars.id(barId).activeMenu = newMenu; // eslint-disable-line
+      }
       data.save();
       return data;
     })
@@ -34,7 +37,7 @@ module.exports.makeActive = (req, res) => {
   Owner.findOne({ email })
     .then((data) => {
       const menu = data.bars.id(barId).menus.id(menuId);
-      data.bars.id(barId).activeMenu = menu; //eslint-disable-line
+      data.bars.id(barId).activeMenu = menu; // eslint-disable-line
       data.save();
       return data;
     })
