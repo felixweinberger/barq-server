@@ -12,4 +12,10 @@ export const deleteOwnerByEmail = async email => Owner.findOneAndDelete({ email 
 
 export const findOwnerByEmail = async email => Owner.findOne({ email });
 
+export const createBarForOwner = async (email, bar) => Owner.findOneAndUpdate(
+  { email },
+  { $push: { bars: bar } },
+  { new: true },
+);
+
 export default createOwner;
