@@ -5,11 +5,9 @@ import { getQueue } from '../db/queue';
 import customerModel from '../models/customer/customer.model';
 import Owner from '../models/owners.model';
 
-const customerCtrl = {};
-
 const stripeAccount = stripeCharger(process.env.STRIPE_SK);
 
-customerCtrl.getMenu = async (req, res) => {
+export const getMenu = async (req, res) => {
   const { barId } = req.params;
   try {
     const menu = await customerModel.getMenu(barId);
@@ -24,7 +22,7 @@ customerCtrl.getMenu = async (req, res) => {
   }
 };
 
-customerCtrl.pay = async (req, res) => {
+export const pay = async (req, res) => {
   const { barId } = req.params;
   const { nextOrderId } = await getQueue(barId);
   const { stripe, order } = req.body;
@@ -52,5 +50,3 @@ customerCtrl.pay = async (req, res) => {
     res.send({ Error: 'Something went wrong with the payment' });
   }
 };
-
-export default customerCtrl;

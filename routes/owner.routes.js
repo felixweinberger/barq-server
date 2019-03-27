@@ -1,7 +1,9 @@
-import ctrl from '../controllers/owner.ctrl';
-import authorize from '../middleware/authorization';
+import express from 'express';
 
-const router = require('express').Router();
+import authorize from '../middleware/authorization';
+import ctrl from '../controllers/owner.ctrl';
+
+const router = express.Router();
 
 router
   .post('/', ctrl.registerOwner)
