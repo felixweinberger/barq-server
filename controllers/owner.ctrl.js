@@ -8,6 +8,7 @@ import {
   createBarForOwner,
   deleteBarForOwner,
   generateStaffCodeForBar,
+  setBarIban,
 } from '../models/owners.model';
 
 import Owner from '../schemas/owners.schema';
@@ -95,16 +96,15 @@ module.exports.generateStaffCode = async (req, res) => {
 };
 
 module.exports.setBarIban = async (req, res) => {
-  const { email } = req.user;
-  const { barId } = req.params;
-  const { iban } = req.body;
-  Owner.findOne({ email })
-    .then((data) => {
-      data.bars.id(barId).iban = iban; // eslint-disable-line
-      data.save();
-    })
-    .then(() => res.status(201).send(JSON.stringify(iban)))
-    .catch(() => res.status(500).send('Error setting IBAN.'));
+  try {
+    const { email } = req.user;
+    const { barId } = req.params;
+    const { iban } = req.body;
+    await setBarIban(email, barId, iban);
+    res.status(201).send(JSON.stringify(iban));
+  } catch (e) {
+    res.status(500).send('Error setting IBAN.');
+  }
 };
 
 // Menu creation and modification

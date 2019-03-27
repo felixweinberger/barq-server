@@ -33,3 +33,9 @@ export const generateStaffCodeForBar = async (email, barId) => {
   owner.save();
   return staffCode;
 };
+
+export const setBarIban = async (email, barId, iban) => {
+  const owner = await Owner.findOne({ email });
+  owner.bars.id(barId).iban = iban;
+  return iban;
+};
