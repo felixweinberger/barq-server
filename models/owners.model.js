@@ -18,4 +18,10 @@ export const createBarForOwner = async (email, bar) => Owner.findOneAndUpdate(
   { new: true },
 );
 
+export const deleteBarForOwner = async (email, bar) => Owner.findOneAndUpdate(
+  { email },
+  { $pull: { bars: bar } },
+  { new: true },
+);
+
 export default createOwner;

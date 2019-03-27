@@ -7,6 +7,7 @@ import {
   findOwnerByEmail,
   deleteOwnerByEmail,
   createBarForOwner,
+  deleteBarForOwner,
 } from '../models/owners.model';
 
 import Owner from '../schemas/owners.schema';
@@ -72,10 +73,14 @@ module.exports.createBar = (req, res) => {
 };
 
 module.exports.deleteBar = (req, res) => {
-  const { email } = req.user;
-  Owner.findOneAndUpdate({ email }, { $pull: { bars: { _id: req.params.barId } } }, { new: true })
-    .then(response => res.status(201).send(response))
-    .catch(() => res.status(500).send('Error deleting bar.'));
+  try {
+    const { email } = req.user;
+    const newBar = req.body;
+    const result = deleteBarForOwner(email, newBar);
+    res.status(201).send(result);
+  } catch (e) {
+    res.status(500).send('Error deleting bar.');
+  }
 };
 
 module.exports.generateStaffCode = async (req, res) => {
