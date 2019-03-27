@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import customerCtrl from '../models/customer/customer.model';
+import { getActiveMenu } from '../models/bars.model';
 
 const queues = {};
 
@@ -9,7 +9,7 @@ export const createQueue = async (barId) => {
       name,
       currency,
       open,
-    } = await customerCtrl.getMenu(barId);
+    } = await getActiveMenu(barId);
 
     const newQueue = {
       barId,
