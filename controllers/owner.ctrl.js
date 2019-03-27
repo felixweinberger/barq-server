@@ -79,7 +79,7 @@ export const deleteBar = async (req, res) => {
     const { email } = req.user;
     const newBar = req.body;
     const result = await deleteBarForOwner(email, newBar);
-    res.status(201).send(result);
+    res.status(204).send(result);
   } catch (e) {
     res.status(500).send('Error deleting bar.');
   }
@@ -125,8 +125,8 @@ export const deleteMenu = async (req, res) => {
   try {
     const { email } = req.user;
     const { barId, menuId } = req.params;
-    const result = await deleteMenuForBar(email, barId, menuId);
-    res.status(204).send(result);
+    await deleteMenuForBar(email, barId, menuId);
+    res.sendStatus(204);
   } catch (e) {
     res.status(500).send('Error deleting menu.');
   }

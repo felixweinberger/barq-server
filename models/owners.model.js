@@ -16,17 +16,23 @@ export const deleteOwnerByEmail = async email => Owner.findOneAndDelete({ email 
 
 export const findOwnerByEmail = async email => Owner.findOne({ email });
 
-export const createBarForOwner = async (email, bar) => Owner.findOneAndUpdate(
-  { email },
-  { $push: { bars: bar } },
-  { new: true },
-);
+export const createBarForOwner = async (email, bar) => {
+  await Owner.findOneAndUpdate(
+    { email },
+    { $push: { bars: bar } },
+    { new: true },
+  );
+  return Owner.findOne({ email });
+};
 
-export const deleteBarForOwner = async (email, bar) => Owner.findOneAndUpdate(
-  { email },
-  { $pull: { bars: bar } },
-  { new: true },
-);
+export const deleteBarForOwner = async (email, bar) => {
+  await Owner.findOneAndUpdate(
+    { email },
+    { $pull: { bars: bar } },
+    { new: true },
+  );
+  return Owner.findOne({ email });
+};
 
 export const generateStaffCodeForBar = async (email, barId) => {
   const staffCode = shortid.generate();
