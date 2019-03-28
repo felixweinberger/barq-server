@@ -1,3 +1,4 @@
+/* eslint-disable */
 import bcrypt from 'bcrypt';
 import shortid from 'shortid';
 import mongoose from 'mongoose';
@@ -64,20 +65,25 @@ export const createMenuForBar = async (email, barId, menu) => {
 };
 
 export const deleteMenuForBar = async (email, barId, menuId) => {
-  const owner = await Owner.findOne({ email });
-  const index = owner.bars.id(barId).menus.findIndex(el => el._id.toString() === menuId); // eslint-disable-line
-  owner.bars.id(barId).menus.splice(index, 1);
-  if (owner.bars.id(barId).activeMenu._id.toString() === menuId) { // eslint-disable-line
-    owner.bars.id(barId).activeMenu = null;
-  }
-  owner.save();
-  return owner;
+    const owner = await Owner.findOne({ email });
+    const index = owner.bars.id(barId).menus.findIndex(el => el._id.toString() === menuId); // eslint-disable-line
+    owner.bars.id(barId).menus.splice(index, 1);
+    if (owner.bars.id(barId).activeMenu !== null
+      && owner.bars.id(barId).activeMenu._id.toString() === menuId) { // eslint-disable-line
+      owner.bars.id(barId).activeMenu = null;
+    }
+    owner.save();
+    return owner;
 };
 
 export const setActiveMenuForBar = async (email, barId, menuId) => {
-  const owner = await Owner.findOne({ email });
-  const menu = owner.bars.id(barId).menus.id(menuId);
-  owner.bars.id(barId).activeMenu = menu; // eslint-disable-line
-  owner.save();
-  return owner;
+    const owner = await Owner.findOne({ email });
+    const menu = owner.bars.id(barId).menus.id(menuId);
+    if (!owner.bars.id(barId).activeMenu) {
+      owner.bars.id(barId).activeMenu = menu;
+    } else {
+      owner.bars.id(barId).activeMenu.set(menu);
+    }
+    owner.save();
+    return owner;
 };
