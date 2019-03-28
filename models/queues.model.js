@@ -16,7 +16,7 @@ export const createQueue = async (barId) => {
       name,
       currency,
       open,
-      nextOrderId: 1,
+      nextOrderId: 0,
       queue: [],
     };
 
@@ -65,6 +65,12 @@ export const updateOrderStatus = async (barId, orderId, newStatus) => {
     }
   });
   return queue;
+};
+
+export const getOrderId = async (barId) => {
+  const queue = await getQueue(barId);
+  queue.nextOrderId += 1;
+  return queue.nextOrderId;
 };
 
 export const setQueueStatus = async (barId, newStatus) => {

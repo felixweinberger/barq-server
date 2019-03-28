@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import stripeCharger from 'stripe';
 
-import { getQueue } from '../models/queues.model';
+import { getQueue, getOrderId } from '../models/queues.model';
 import { getActiveMenu, addOrderToHistory } from '../models/bars.model';
 
 const stripeAccount = stripeCharger(process.env.STRIPE_SK);
@@ -23,11 +23,12 @@ export const getMenu = async (req, res) => {
 
 export const pay = async (req, res) => {
   const { barId } = req.params;
-  const { nextOrderId } = await getQueue(barId);
   const { stripe, order } = req.body;
   try {
     await stripeAccount.charges.create(stripe);
     const total = order.items.reduce((acc, el) => acc + el.price * el.quantity, 0);
+
+    const nextOrderId = await getOrderId(barId);
     const confirmation = {
       ...order,
       status: 'paid',
