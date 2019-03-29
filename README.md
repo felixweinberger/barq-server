@@ -9,7 +9,7 @@ BarQ allows you to order and pay for drinks from your phone wherever you are in 
 ![staff](screenshots/staff.png)
 
 ## Getting Started
-Each of the interfaces (Customer, Staff, and Admin) is a separate React app and expects to connect with the [BarQ Server](https://github.com/felixweinberger/barq-server).
+The BarQ server provides the back-end to each each of the 3 main interfaces (Customer, Staff, and Admin) in [BarQ client](https://github.com/felixweinberger/barq-client), which is a collection of 3 separate React apps.
 
 1. Clone this repo and the [BarQ client](https://github.com/felixweinberger/barq-client) where you want them (e.g. `~/projects/barq`)
 2. Rename the `.env.example` file to `.env` and fill in necessary fields
