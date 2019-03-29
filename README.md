@@ -45,5 +45,5 @@ The BarQ server provides the back-end to each each of the 3 main interfaces (Cus
 - Natalia Rizzi
 - Egill Hreinsson
 - Alan Hu
-- Felix Weinberger
 - Rachel Bonny
+- Felix Weinberger
