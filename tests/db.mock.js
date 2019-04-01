@@ -4,13 +4,13 @@ import Owner from '../schemas/owners.schema';
 
 const mockOwner = async () => ({
   _id: '5c9a0b57f3ddc20180f0555f',
-  email: 'example@cwbar.com',
+  email: 'example@bar.com',
   name: 'Joe Example',
   password: await bcrypt.hash('secret', 10),
   bars: [{
-    name: 'Codeworks Bar',
+    name: 'Joe\'s Bar',
     currency: 'EUR',
-    _id: 'ebba',
+    _id: 'ebba12',
     history: [{
       _id: '5c9a16441d198b01e861c1f7',
       items: [{

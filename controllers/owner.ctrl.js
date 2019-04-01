@@ -14,7 +14,6 @@ import {
   setActiveMenuForBar,
 } from '../models/owners.model';
 
-// Owner registration & login
 export const registerOwner = async (req, res) => {
   try {
     const { email, name, password } = req.body;
@@ -62,7 +61,6 @@ export const deleteOwner = async (req, res) => {
   }
 };
 
-// Bar creation and modification
 export const createBar = async (req, res) => {
   try {
     const { email } = req.user;
@@ -108,7 +106,6 @@ export const setIban = async (req, res) => {
   }
 };
 
-// Menu creation and modification
 export const createMenu = async (req, res) => {
   try {
     const { email } = req.user;

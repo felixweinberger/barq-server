@@ -8,7 +8,7 @@
     "precommit": "npm run lint",
     "test": "test",
     "dev": "npx nodemon -L --exec babel-node index.js",
-    "seed": "npx babel-node test/db.mock.js"
+    "seed": "npx babel-node tests/db.mock.js"
   },
   "repository": {
     "type": "git",
