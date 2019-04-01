@@ -60,7 +60,7 @@ services:
   # Set up the redis cache for the frontoffice services (eventually)
   redis:
     # Use the official image of redis 5 (latest version at time of writing)
-    image: redis:5
+    image: redislabs/rejson:latest
     # Set the container_name to have easy access to the cache
     container_name: ${REDIS_NAME}
     # Set the volumes for potentially persisting data

@@ -1,4 +1,7 @@
 /* eslint-disable no-console */
+import redis from 'redis';
+
+import cache from '../db/cache';
 import { getActiveMenu } from './bars.model';
 
 const queues = {};
@@ -21,15 +24,20 @@ export const createQueue = async (barId) => {
     };
 
     queues[barId] = newQueue;
+
+    cache.send_command('JSON.SET', [barId, '.', JSON.stringify(newQueue)], redis.print);
+
     return queues[barId];
-  } catch (error) {
-    console.error('Something went wrong creating the queue: ', error);
+  } catch (e) {
+    console.error('Something went wrong creating the queue: ', e);
     return 1;
   }
 };
 
 export const getQueue = async (barId) => {
   try {
+    cache.send_command('JSON.GET', [barId], redis.print);
+
     let queue = queues[barId];
     if (!queue) queue = await createQueue(barId);
     return queue;
