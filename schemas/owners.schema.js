@@ -43,7 +43,7 @@ const Order = new mongoose.Schema({
 
 const Bar = new mongoose.Schema({
   _id: { type: String, default: ids.generate },
-  iban: String,
+  iban: { type: String, default: null },
   staffCode: String,
   name: String,
   currency: String,

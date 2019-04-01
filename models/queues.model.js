@@ -29,52 +29,87 @@ export const createQueue = async (barId) => {
 };
 
 export const getQueue = async (barId) => {
-  let queue = queues[barId];
-  if (!queue) queue = await createQueue(barId);
-  return queue;
+  try {
+    let queue = queues[barId];
+    if (!queue) queue = await createQueue(barId);
+    return queue;
+  } catch (e) {
+    console.error('Error in getQueue:', e);
+    return { Error: 'Could not get queue.' };
+  }
 };
 
 export const getOrder = async (barId, orderId) => {
-  const queue = queues[barId];
-  if (!queue) return null;
-  const foundOrder = queue.queue.find(order => order.orderId === orderId);
-  return foundOrder || null;
+  try {
+    const queue = queues[barId];
+    if (!queue) return null;
+    const foundOrder = queue.queue.find(order => order.orderId === orderId);
+    return foundOrder || null;
+  } catch (e) {
+    console.error('Error in getOrder:', e);
+    return { Error: 'Could not get order.' };
+  }
 };
 
 export const addToQueue = async (barId, order) => {
-  const queue = await getQueue(barId);
-  if (queue.queue.find(ord => ord.orderId === order.orderId)) return null;
-  queue.queue.push(order);
-  queue.nextOrderId += 1;
-  return queue;
+  try {
+    const queue = await getQueue(barId);
+    if (queue.queue.find(ord => ord.orderId === order.orderId)) return null;
+    queue.queue.push(order);
+    queue.nextOrderId += 1;
+    return queue;
+  } catch (e) {
+    console.error('Error in addToQueue:', e);
+    return { Error: 'Could not add order to queue.' };
+  }
 };
 
 export const getOrderStatus = async (barId, orderId) => {
-  const queue = await getQueue(barId);
-  const foundOrder = queue.queue
-    .find(order => order.orderId === Number(orderId));
-  if (foundOrder) return foundOrder.status;
-  return null;
+  try {
+    const queue = await getQueue(barId);
+    const foundOrder = queue.queue
+      .find(order => order.orderId === Number(orderId));
+    if (foundOrder) return foundOrder.status;
+    return null;
+  } catch (e) {
+    console.error('Error in getOrderStatus:', e);
+    return { Error: 'Could not get order status.' };
+  }
 };
 
 export const updateOrderStatus = async (barId, orderId, newStatus) => {
-  const queue = await getQueue(barId);
-  queue.queue.forEach((el, i) => {
-    if (el.orderId === orderId) {
-      queue.queue[i].status = newStatus;
-    }
-  });
-  return queue;
+  try {
+    const queue = await getQueue(barId);
+    queue.queue.forEach((el, i) => {
+      if (el.orderId === orderId) {
+        queue.queue[i].status = newStatus;
+      }
+    });
+    return queue;
+  } catch (e) {
+    console.error('Error in updateOrderStatus:', e);
+    return { Error: 'Could not get order status.' };
+  }
 };
 
 export const getOrderId = async (barId) => {
-  const queue = await getQueue(barId);
-  queue.nextOrderId += 1;
-  return queue.nextOrderId;
+  try {
+    const queue = await getQueue(barId);
+    queue.nextOrderId += 1;
+    return queue.nextOrderId;
+  } catch (e) {
+    console.error('Error in getOrderId:', e);
+    return { Error: 'Could not get order ID.' };
+  }
 };
 
 export const setQueueStatus = async (barId, newStatus) => {
-  const queue = await getQueue(barId);
-  queue.open = newStatus;
-  return queues[barId];
+  try {
+    const queue = await getQueue(barId);
+    queue.open = newStatus;
+    return queues[barId];
+  } catch (e) {
+    console.error('Error in setQueueStatus:', e);
+    return { Error: 'Could not set queue status.' };
+  }
 };
