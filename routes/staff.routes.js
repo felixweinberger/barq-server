@@ -6,6 +6,7 @@ import * as ctrl from '../controllers/staff.ctrl';
 const router = express.Router();
 
 router
+  .get('/:barId', ctrl.getApp)
   .get('/:barId/queue', authorize, ctrl.fetchQueue)
   .post('/:barId/open', authorize, ctrl.setBarStatus)
   .get('/:barId/code', ctrl.checkStaffCode);

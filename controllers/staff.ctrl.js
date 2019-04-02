@@ -1,7 +1,12 @@
 import jwt from 'jsonwebtoken';
+import path from 'path';
 
 import { checkStaffCodeByBar } from '../models/bars.model';
 import { getQueue, setQueueStatus } from '../models/queues.model';
+
+export const getApp = async (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'staff', 'index.html'));
+};
 
 export const fetchQueue = async (req, res) => {
   try {

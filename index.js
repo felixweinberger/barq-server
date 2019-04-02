@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import express from 'express';
+import path from 'path';
 import cors from 'cors';
 import logger from 'morgan';
 import dotenv from 'dotenv';
@@ -16,6 +17,7 @@ const PORT = process.env.SERVER_PORT || 3000;
 const ENV = process.env.ENV || 'dev';
 
 app
+  .use('/public', express.static(path.join(__dirname, 'public')))
   .use(logger('tiny'))
   .use(cors())
   .use(express.static('public'))

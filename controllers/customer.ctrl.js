@@ -1,10 +1,15 @@
 /* eslint-disable no-console */
+import path from 'path';
 import stripeCharger from 'stripe';
 
 import { getQueue, getOrderId } from '../models/queues.model';
 import { getActiveMenu, addOrderToHistory } from '../models/bars.model';
 
 const stripeAccount = stripeCharger(process.env.STRIPE_SK);
+
+export const getApp = async (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'customer', 'index.html'));
+};
 
 export const getMenu = async (req, res) => {
   const { barId } = req.params;
