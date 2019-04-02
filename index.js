@@ -20,7 +20,6 @@ app
   .use('/public', express.static(path.join(__dirname, 'public')))
   .use(logger('tiny'))
   .use(cors())
-  .use(express.static('public'))
   .use(express.json())
   .use(routes);
 
